@@ -1,0 +1,9 @@
+init: exit=0 seconds=12.526856226
+apply: exit=0 seconds=84.952692742
+resources_in_state: 26
+plan-after-apply: exit=2 seconds=9.511123050
+  # aws_dynamodb_table.orders will be updated in-place
+destroy: exit=0 seconds=39.308674856
+Terraform v1.17.2
+- Installed hashicorp/archive v2.8.1 (signed by HashiCorp)
+- Installed hashicorp/aws v5.100.0 (signed by HashiCorp)

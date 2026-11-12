@@ -1,0 +1,8 @@
+moto_version: 5.2.5
+moto_ready_ms: 1174
+moto_rss_kib_idle: 52292
+moto_rss_kib_after: 133336
+floci_image: floci/floci:2.4.0 floci/floci@sha256:5ee85db604c4aa74ac76e07ea5cc83086f37bb472bf3dbb97e34019e48efae9c size=94592443
+floci_ready_ms: 992
+floci_mem_idle: 25.42MiB / 7.755GiB
+floci_mem_after: 61.02MiB / 7.755GiB

@@ -1,0 +1,13 @@
+partial  8/9  S3: objects, presigned URLs, multipart, versioning
+           FAIL expired presigned GET is refused (AWS: 403): HTTP 200 b'hello'
+pass     5/5  SQS: visibility timeout, DLQ, redrive back
+pass     6/6  DynamoDB: conditional writes, transactions, streams
+pass     4/4  Lambda: create, invoke, error, cold vs warm
+partial  1/2  EventBridge rule to SQS target
+           FAIL only the matching event is delivered: delivered totals=[]
+pass     2/2  SNS fan-out to two SQS queues, raw + filter policy
+pass     6/6  KMS: encrypt, decrypt, context, data keys
+pass     3/3  Secrets Manager: versions, stages, deletion
+pass     3/3  Step Functions: Choice, Wait, Lambda task, Fail
+
+38/40 checks passed in 44.3 s -> /root/results/floci-scenarios.json

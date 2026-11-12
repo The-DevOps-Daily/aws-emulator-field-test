@@ -1,0 +1,96 @@
+{
+  "commit": "7753983c6e495ec3612695b1336bf4936fc7b7fd",
+  "scoredAt": "2026-11-11T00:09:58.257602+00:00",
+  "units": 42937,
+  "by_outcome": {
+    "fail": 18614,
+    "pass": 24243,
+    "skipped": 80
+  },
+  "pass_rate": 0.565,
+  "by_kind": {
+    "behavioral:fail": 11958,
+    "behavioral:pass": 20364,
+    "behavioral:skipped": 80,
+    "wire:fail": 6656,
+    "wire:pass": 3879
+  },
+  "services_scored": 355,
+  "our_services": {
+    "com.amazonaws.dynamodb#DynamoDB_20120810": {
+      "units": 1694,
+      "pass": 1153,
+      "fail": 533,
+      "skipped": 8,
+      "pass_rate": 0.681
+    },
+    "com.amazonaws.eventbridge#AWSEvents": {
+      "units": 966,
+      "pass": 690,
+      "fail": 274,
+      "skipped": 2,
+      "pass_rate": 0.714
+    },
+    "com.amazonaws.iam#AWSIdentityManagementV20100508": {
+      "units": 1223,
+      "fail": 512,
+      "pass": 709,
+      "skipped": 2,
+      "pass_rate": 0.58
+    },
+    "com.amazonaws.kms#TrentService": {
+      "units": 505,
+      "pass": 360,
+      "fail": 141,
+      "skipped": 4,
+      "pass_rate": 0.713
+    },
+    "com.amazonaws.lambda#AWSGirApiService": {
+      "units": 3006,
+      "fail": 1422,
+      "pass": 1561,
+      "skipped": 23,
+      "pass_rate": 0.519
+    },
+    "com.amazonaws.s3#AmazonS3": {
+      "units": 2814,
+      "fail": 1035,
+      "pass": 1763,
+      "skipped": 16,
+      "pass_rate": 0.627
+    },
+    "com.amazonaws.secretsmanager#secretsmanager": {
+      "units": 441,
+      "pass": 300,
+      "fail": 140,
+      "skipped": 1,
+      "pass_rate": 0.68
+    },
+    "com.amazonaws.sns#AmazonSimpleNotificationService": {
+      "units": 635,
+      "pass": 440,
+      "fail": 195,
+      "pass_rate": 0.693
+    },
+    "com.amazonaws.sqs#AmazonSQS": {
+      "units": 1523,
+      "pass": 1032,
+      "fail": 482,
+      "skipped": 9,
+      "pass_rate": 0.678
+    },
+    "com.amazonaws.sts#AWSSecurityTokenServiceV20110615": {
+      "units": 253,
+      "fail": 125,
+      "pass": 121,
+      "skipped": 7,
+      "pass_rate": 0.478
+    }
+  },
+  "top_level_keys": [
+    "commit",
+    "schemaVersion",
+    "scoredAt",
+    "units"
+  ]
+}

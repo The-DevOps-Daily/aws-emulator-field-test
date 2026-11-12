@@ -1,0 +1,348 @@
+{
+  "target": "floci",
+  "role_policies": true,
+  "endpoint": "http://127.0.0.1:4566",
+  "run": "28c09298",
+  "seconds": 44.3,
+  "checks_passed": 38,
+  "checks_total": 40,
+  "lambda_invoke_ms": [
+    14184.2,
+    8.2,
+    7.6,
+    7.7
+  ],
+  "lambda_probe": {
+    "python": "3.12.16",
+    "platform": "linux",
+    "read /etc/hostname": "'5e12a79c54ec'",
+    "os.getuid()": "0",
+    "socket.gethostname()": "'5e12a79c54ec'",
+    "list /": "['.dockerenv', 'THIRD-PARTY-LICENSES.txt', 'bin', 'boot', 'dev', 'etc', 'home', 'lambda-entrypoint.sh']",
+    "import subprocess": "'subprocess'",
+    "env AWS_REGION": "'us-east-1'"
+  },
+  "results": [
+    {
+      "scenario": "S3: objects, presigned URLs, multipart, versioning",
+      "status": "partial",
+      "passed": 8,
+      "total": 9,
+      "seconds": 3.63,
+      "checks": [
+        {
+          "check": "create bucket",
+          "ok": true,
+          "detail": "fieldtest-28c09298",
+          "ms": 18.0
+        },
+        {
+          "check": "put/get round trip",
+          "ok": true,
+          "detail": "b'hello'",
+          "ms": 32.2
+        },
+        {
+          "check": "presigned GET",
+          "ok": true,
+          "detail": "HTTP 200 b'hello'",
+          "ms": 61.6
+        },
+        {
+          "check": "expired presigned GET is refused (AWS: 403)",
+          "ok": false,
+          "detail": "HTTP 200 b'hello'",
+          "ms": 2507.0
+        },
+        {
+          "check": "presigned PUT",
+          "ok": true,
+          "detail": "HTTP 200, stored b'uploaded'",
+          "ms": 14.6
+        },
+        {
+          "check": "multipart upload, 3 parts",
+          "ok": true,
+          "detail": "len=11534336 etag=\"c1c25f5184414ab5f869e504eb6ee1f0-3\"",
+          "ms": 553.1
+        },
+        {
+          "check": "1 MiB first part is refused (AWS: EntityTooSmall)",
+          "ok": true,
+          "detail": "EntityTooSmall: Your proposed upload is smaller than the minimum allowed size",
+          "ms": 142.7
+        },
+        {
+          "check": "versioning keeps old versions",
+          "ok": true,
+          "detail": "versions=2 old=b'one'",
+          "ms": 58.4
+        },
+        {
+          "check": "delete creates a delete marker",
+          "ok": true,
+          "detail": "NoSuchKey: The specified key does not exist.; v1=b'one'",
+          "ms": 23.9
+        }
+      ]
+    },
+    {
+      "scenario": "SQS: visibility timeout, DLQ, redrive back",
+      "status": "pass",
+      "passed": 5,
+      "total": 5,
+      "seconds": 5.63,
+      "checks": [
+        {
+          "check": "queues with redrive policy",
+          "ok": true,
+          "detail": "http://localhost:4566/000000000000/ft-main-28c09298",
+          "ms": 39.5
+        },
+        {
+          "check": "message hides for the visibility timeout, then returns",
+          "ok": true,
+          "detail": "first=1 while_hidden=0 after_timeout=1 receive_count=2",
+          "ms": 2518.5
+        },
+        {
+          "check": "third receive moves it to the DLQ (maxReceiveCount=2)",
+          "ok": true,
+          "detail": "main=0 dlq=1",
+          "ms": 2511.8
+        },
+        {
+          "check": "StartMessageMoveTask redrives DLQ back to source",
+          "ok": true,
+          "detail": "task=task-c7e94d9 status=COMPLETED back_in_main=1",
+          "ms": 520.6
+        },
+        {
+          "check": "FIFO content-based dedupe",
+          "ok": true,
+          "detail": "received=1 (two identical sends)",
+          "ms": 22.8
+        }
+      ]
+    },
+    {
+      "scenario": "DynamoDB: conditional writes, transactions, streams",
+      "status": "pass",
+      "passed": 6,
+      "total": 6,
+      "seconds": 0.18,
+      "checks": [
+        {
+          "check": "create table with stream",
+          "ok": true,
+          "detail": "arn:aws:dynamodb:us-east-1:000000000000:table/ft-orders-28c09298/stream/2026-11-12T09:26:11.134",
+          "ms": 42.2
+        },
+        {
+          "check": "second insert-if-absent fails",
+          "ok": true,
+          "detail": "ConditionalCheckFailedException: The conditional request failed",
+          "ms": 20.4
+        },
+        {
+          "check": "stale optimistic-lock update fails",
+          "ok": true,
+          "detail": "ConditionalCheckFailedException: The conditional request failed",
+          "ms": 15.0
+        },
+        {
+          "check": "failed transaction writes nothing, reasons per item",
+          "ok": true,
+          "detail": "TransactionCanceledException reasons=['None', 'ConditionalCheckFailed'] o-2_written=False",
+          "ms": 25.1
+        },
+        {
+          "check": "successful transaction applies both writes",
+          "ok": true,
+          "detail": "version=3",
+          "ms": 11.6
+        },
+        {
+          "check": "stream records INSERT and MODIFY events",
+          "ok": true,
+          "detail": "shards=1 events=['INSERT', 'MODIFY', 'INSERT', 'MODIFY']",
+          "ms": 39.6
+        }
+      ]
+    },
+    {
+      "scenario": "Lambda: create, invoke, error, cold vs warm",
+      "status": "pass",
+      "passed": 4,
+      "total": 4,
+      "seconds": 15.02,
+      "checks": [
+        {
+          "check": "create function (python3.12 zip)",
+          "ok": true,
+          "detail": "state=Active",
+          "ms": 53.7
+        },
+        {
+          "check": "invoke returns handler output (first call = cold)",
+          "ok": true,
+          "detail": "invoke_ms=[14184.2, 8.2, 7.6, 7.7] payload={'echo': 'hi-3'}",
+          "ms": 14208.3
+        },
+        {
+          "check": "handler exception surfaces as FunctionError",
+          "ok": true,
+          "detail": "FunctionError=Unhandled body={'errorMessage': 'boom', 'errorType': 'ValueError', 'requestId': '8addf743-d638-4734-bd16-0b45901154e3', 'stackTrace': ['  File \"/var/task/app.py\", line 24, in handler\\n    raise ValueError(\"boom\")\\n']}",
+          "ms": 9.2
+        },
+        {
+          "check": "function calls S3 with boto3 (emulator-side SDK)",
+          "ok": true,
+          "detail": "FunctionError=None body={'wrote': 'from-lambda.txt'} object=b'hi'",
+          "ms": 668.3
+        }
+      ]
+    },
+    {
+      "scenario": "EventBridge rule to SQS target",
+      "status": "partial",
+      "passed": 1,
+      "total": 2,
+      "seconds": 10.13,
+      "checks": [
+        {
+          "check": "rule with numeric pattern + SQS target",
+          "ok": true,
+          "detail": "arn:aws:events:us-east-1:000000000000:rule/ft-orders-28c09298",
+          "ms": 37.9
+        },
+        {
+          "check": "only the matching event is delivered",
+          "ok": false,
+          "detail": "delivered totals=[]",
+          "ms": 10074.2
+        }
+      ]
+    },
+    {
+      "scenario": "SNS fan-out to two SQS queues, raw + filter policy",
+      "status": "pass",
+      "passed": 2,
+      "total": 2,
+      "seconds": 8.39,
+      "checks": [
+        {
+          "check": "topic + 2 queue subscriptions",
+          "ok": true,
+          "detail": "arn:aws:sns:us-east-1:000000000000:ft-topic-28c09298",
+          "ms": 67.6
+        },
+        {
+          "check": "raw delivery to one queue, filter policy on the other",
+          "ok": true,
+          "detail": "raw_queue=['msg-a', 'msg-b'] filtered_queue=['msg-a']",
+          "ms": 8305.6
+        }
+      ]
+    },
+    {
+      "scenario": "KMS: encrypt, decrypt, context, data keys",
+      "status": "pass",
+      "passed": 6,
+      "total": 6,
+      "seconds": 0.15,
+      "checks": [
+        {
+          "check": "create key + alias",
+          "ok": true,
+          "detail": "b9030caf-2327-49e4-a982-d0f2be238df5",
+          "ms": 17.1
+        },
+        {
+          "check": "encrypt/decrypt round trip via alias",
+          "ok": true,
+          "detail": "keyid=b9030caf-2327-49e4-a982-d0f2be238df5",
+          "ms": 13.6
+        },
+        {
+          "check": "wrong encryption context is refused (AWS: InvalidCiphertextException)",
+          "ok": true,
+          "detail": "InvalidCiphertextException: None",
+          "ms": 7.7
+        },
+        {
+          "check": "tampered ciphertext is refused",
+          "ok": true,
+          "detail": "InvalidCiphertextException: None",
+          "ms": 5.0
+        },
+        {
+          "check": "GenerateDataKey + decrypt",
+          "ok": true,
+          "detail": "plaintext_len=32",
+          "ms": 10.8
+        },
+        {
+          "check": "disabled key refuses Encrypt (AWS: DisabledException)",
+          "ok": true,
+          "detail": "DisabledException: arn:aws:kms:us-east-1:000000000000:key/b9030caf-2327-49e4-a982-d0f2be238df5 is disabled.",
+          "ms": 16.5
+        }
+      ]
+    },
+    {
+      "scenario": "Secrets Manager: versions, stages, deletion",
+      "status": "pass",
+      "passed": 3,
+      "total": 3,
+      "seconds": 0.07,
+      "checks": [
+        {
+          "check": "create + get",
+          "ok": true,
+          "detail": "v1",
+          "ms": 15.6
+        },
+        {
+          "check": "new version moves AWSCURRENT, keeps AWSPREVIOUS",
+          "ok": true,
+          "detail": "AWSCURRENT=v2 AWSPREVIOUS=v1",
+          "ms": 18.1
+        },
+        {
+          "check": "scheduled deletion blocks reads, restore brings it back",
+          "ok": true,
+          "detail": "InvalidRequestException: You can't perform this operation on the secret because it was marked for deletion.; after restore=v2",
+          "ms": 29.1
+        }
+      ]
+    },
+    {
+      "scenario": "Step Functions: Choice, Wait, Lambda task, Fail",
+      "status": "pass",
+      "passed": 3,
+      "total": 3,
+      "seconds": 1.08,
+      "checks": [
+        {
+          "check": "create state machine",
+          "ok": true,
+          "detail": "arn:aws:states:us-east-1:000000000000:stateMachine:ft-flow-28c09298",
+          "ms": 23.3
+        },
+        {
+          "check": "Choice -> Wait -> Lambda task succeeds",
+          "ok": true,
+          "detail": "status=SUCCEEDED output={'echo': 'big-order'} error=None cause=None",
+          "ms": 1024.8
+        },
+        {
+          "check": "Fail state ends the execution with its error",
+          "ok": true,
+          "detail": "status=FAILED error=TooSmall",
+          "ms": 9.8
+        }
+      ]
+    }
+  ]
+}

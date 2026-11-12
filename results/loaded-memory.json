@@ -1,0 +1,76 @@
+{
+  "pid": 15431,
+  "steps": [
+    {
+      "step": "baseline",
+      "mem_mib": {
+        "VmHWM": 281.7,
+        "VmRSS": 281.7,
+        "RssAnon": 172.5,
+        "RssFile": 109.3
+      }
+    },
+    {
+      "step": "s3: 600 x 100 KiB PutObject",
+      "calls": 600,
+      "payload_mib": 58.6,
+      "wall_s": 9.9,
+      "call_ms_p50": 14.66,
+      "call_ms_p95": 32.35,
+      "mem_mib": {
+        "VmHWM": 367.2,
+        "VmRSS": 367.2,
+        "RssAnon": 236.6,
+        "RssFile": 130.6
+      }
+    },
+    {
+      "step": "s3 cap probe: +10 MiB object",
+      "result": "An error occurred (ValidationException) when calling the PutObject operation: storing \"big-10mib\" would leave the bucket \"load-test\" holding 71980451 bytes of objects, past the 67108864 bytes this emulator keeps per bucket"
+    },
+    {
+      "step": "dynamodb: 20000 x 1 KiB items (800 BatchWriteItem)",
+      "calls": 800,
+      "payload_mib": 19.5,
+      "wall_s": 12.6,
+      "call_ms_p50": 13.64,
+      "call_ms_p95": 33.07,
+      "mem_mib": {
+        "VmHWM": 411.5,
+        "VmRSS": 411.5,
+        "RssAnon": 276.4,
+        "RssFile": 135.1
+      },
+      "first_scan_page_count": 1032
+    },
+    {
+      "step": "sqs: 900 x 1 KiB messages (90 SendMessageBatch)",
+      "calls": 90,
+      "payload_mib": 0.88,
+      "wall_s": 1.2,
+      "call_ms_p50": 13.08,
+      "call_ms_p95": 29.71,
+      "mem_mib": {
+        "VmHWM": 415.4,
+        "VmRSS": 415.4,
+        "RssAnon": 277.2,
+        "RssFile": 138.2
+      },
+      "approx_messages": "1000"
+    },
+    {
+      "step": "sqs cap probe: +110 messages",
+      "result": "An error occurred (OverLimit) when calling the SendMessageBatch operation: This emulator holds at most 1000 messages per queue; queue load-test cannot take 10 more. Delete messages from it first."
+    },
+    {
+      "step": "after deleting everything + 15 s",
+      "wall_s": 15.1,
+      "mem_mib": {
+        "VmHWM": 418.9,
+        "VmRSS": 418.9,
+        "RssAnon": 278.8,
+        "RssFile": 140.0
+      }
+    }
+  ]
+}

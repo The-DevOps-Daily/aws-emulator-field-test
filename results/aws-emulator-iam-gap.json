@@ -1,0 +1,272 @@
+{
+  "target": "aws-emulator",
+  "run": "75390ff2",
+  "cases": 32,
+  "matches_aws": 27,
+  "gaps": [
+    "s3:ListAllMyBuckets",
+    "Allow * but permissions boundary allows only reads: s3:PutObject",
+    "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+    "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+    "admin role assumed with a GetObject-only session policy: s3:PutObject"
+  ],
+  "results": [
+    {
+      "group": "user with no policies",
+      "case": "sts:GetCallerIdentity",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:ListAllMyBuckets",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-75390ff2/x\" because no identity-based policy allows the s3:PutObject action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "sqs:SendMessage",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: sqs:sendmessage on resource: arn:aws:sqs:us-east-1:000000000000:iamgap-75390ff2 because no identity-based policy allows the sqs:sendmessage action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "dynamodb:PutItem",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: dynamodb:PutItem on resource: arn:aws:dynamodb:us-east-1:000000000000:table/iamgap-75390ff2 because no identity-based policy allows the dynamodb:PutItem action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "kms:Encrypt",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: kms:Encrypt on resource: arn:aws:kms:us-east-1:000000000000:key/c9f48fe7-84b0-464f-aeb1-b8fef9e96f1b because no identity-based policy allows the kms:Encrypt action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "secretsmanager:GetSecretValue",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:000000000000:secret:iamgap/75390ff2-NjMu9l because no identity-based policy allows the secretsmanager:GetS"
+    },
+    {
+      "group": "user with no policies",
+      "case": "sns:Publish",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AuthorizationError: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: SNS:Publish on resource: arn:aws:sns:us-east-1:000000000000:iamgap-75390ff2 because no resource-based policy allows the SNS:Publish action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "events:PutEvents",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: events:PutEvents on resource: arn:aws:events:us-east-1:000000000000:event-bus/default because no identity-based policy allows the events:PutEvents action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "iam:CreateUser",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: iam:CreateUser on resource: user escalate-75390ff2 because no identity-based policy allows the iam:CreateUser action"
+    },
+    {
+      "group": "identity policies",
+      "case": "admin user: s3:PutObject (baseline)",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow * plus explicit Deny s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/admin-deny-75390ff2 is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-75390ff2/d.txt\" with an explicit deny in an identity-based policy"
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow * but permissions boundary allows only reads: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow PutObject only with SSE-KMS: put without SSE",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/cond-75390ff2 is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-75390ff2/c1.txt\" because no identity-based policy allows the s3:PutObject action"
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow PutObject only with SSE-KMS: put with SSE-KMS",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "resource policies",
+      "case": "bucket policy denies this admin user: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/admin2-75390ff2 is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-pol-75390ff2/p.txt\" with an explicit deny in a resource-based policy"
+    },
+    {
+      "group": "resource policies",
+      "case": "bucket policy denies everyone over HTTPS: emulator's own key PutObject",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/emulator is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-denyall-75390ff2/p.txt\" with an explicit deny in a resource-based policy"
+    },
+    {
+      "group": "resource policies",
+      "case": "KMS key policy denies this admin user: kms:Encrypt",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/admin2-75390ff2 is not authorized to perform: kms:Encrypt on resource: arn:aws:kms:us-east-1:000000000000:key/0908352f-1c85-4cf0-8775-da05e19afd51 with an explicit deny in a resource-based policy"
+    },
+    {
+      "group": "resource policies",
+      "case": "secret resource policy denies this admin user: GetSecretValue",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/admin2-75390ff2 is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:000000000000:secret:iamgap/75390ff2-NjMu9l with an explicit deny in a resource-based policy"
+    },
+    {
+      "group": "resource policies",
+      "case": "no identity policy, bucket policy allows this user: s3:PutObject",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "PutObject allowed on bucket A only: put to bucket A",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "PutObject allowed on bucket A only: put to bucket B",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/scoped-75390ff2 is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-grant-75390ff2/s.txt\" because no identity-based policy allows the s3:PutObject action"
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow NotAction s3:*: sqs:SendMessage",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow NotAction s3:*: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/notaction-75390ff2 is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::iamgap-75390ff2/n.txt\" because no identity-based policy allows the s3:PutObject action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:ListBucket (ListObjectsV2)",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: s3:ListBucket on resource: \"arn:aws:s3:::iamgap-75390ff2\" because no identity-based policy allows the s3:ListBucket action"
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:GetObject",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: s3:GetObject on resource: \"arn:aws:s3:::iamgap-75390ff2/admin.txt\" because no identity-based policy allows the s3:GetObject action"
+    },
+    {
+      "group": "roles and sessions",
+      "case": "admin user assumes a role that trusts only lambda.amazonaws.com",
+      "aws_expected": "deny",
+      "emulator": "deny",
+      "matches_aws": true,
+      "detail": "HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/admin-75390ff2 is not authorized to perform: sts:AssumeRole on resource: arn:aws:iam::000000000000:role/svc-only-75390ff2"
+    },
+    {
+      "group": "roles and sessions",
+      "case": "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "roles and sessions",
+      "case": "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "roles and sessions",
+      "case": "admin role assumed with a GetObject-only session policy: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "service-to-service",
+      "case": "EventBridge rule -> SQS queue with no queue policy",
+      "aws_expected": "not delivered",
+      "emulator": "not delivered",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "service-to-service",
+      "case": "SNS topic -> SQS queue with no queue policy",
+      "aws_expected": "not delivered",
+      "emulator": "not delivered",
+      "matches_aws": true,
+      "detail": ""
+    }
+  ],
+  "note": "aws_expected is taken from AWS documentation; these cases were not run on real AWS."
+}

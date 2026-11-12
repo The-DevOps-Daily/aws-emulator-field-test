@@ -1,0 +1,18 @@
+{
+  "node": "v22.23.5",
+  "hostsBlock": "on",
+  "out": [
+    {
+      "label": "default client",
+      "ok": false,
+      "error": "Error: connect ECONNREFUSED 0.0.0.0:443",
+      "cause": "ECONNREFUSED"
+    },
+    {
+      "label": "useQueueUrlAsEndpoint: false",
+      "ok": true,
+      "queueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/js-endpoint-test",
+      "body": "hello"
+    }
+  ]
+}

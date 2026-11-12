@@ -1,0 +1,34 @@
+OK   [user with no policies] sts:GetCallerIdentity: aws=allow emulator=allow 
+GAP  [user with no policies] s3:ListAllMyBuckets: aws=deny emulator=allow 
+OK   [user with no policies] s3:PutObject: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: s3:PutObject on resource: "arn:
+OK   [user with no policies] sqs:SendMessage: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: sqs:sendmessage on resource: ar
+OK   [user with no policies] dynamodb:PutItem: aws=deny emulator=deny HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: dynamodb:PutItem on re
+OK   [user with no policies] kms:Encrypt: aws=deny emulator=deny HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: kms:Encrypt on resourc
+OK   [user with no policies] secretsmanager:GetSecretValue: aws=deny emulator=deny HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: secretsmanager:GetSecr
+OK   [user with no policies] sns:Publish: aws=deny emulator=deny HTTP 403 AuthorizationError: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: SNS:Publish on resource: 
+OK   [user with no policies] events:PutEvents: aws=deny emulator=deny HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: events:PutEvents on re
+OK   [user with no policies] iam:CreateUser: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: iam:CreateUser on resource: use
+OK   [identity policies] admin user: s3:PutObject (baseline): aws=allow emulator=allow 
+OK   [identity policies] Allow * plus explicit Deny s3:PutObject: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/admin-deny-75390ff2 is not authorized to perform: s3:PutObject on resource: "arn
+GAP  [identity policies] Allow * but permissions boundary allows only reads: s3:PutObject: aws=deny emulator=allow 
+OK   [identity policies] Allow PutObject only with SSE-KMS: put without SSE: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/cond-75390ff2 is not authorized to perform: s3:PutObject on resource: "arn:aws:s
+OK   [identity policies] Allow PutObject only with SSE-KMS: put with SSE-KMS: aws=allow emulator=allow 
+OK   [resource policies] bucket policy denies this admin user: s3:PutObject: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/admin2-75390ff2 is not authorized to perform: s3:PutObject on resource: "arn:aws
+OK   [resource policies] bucket policy denies everyone over HTTPS: emulator's own key PutObject: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/emulator is not authorized to perform: s3:PutObject on resource: "arn:aws:s3:::i
+OK   [resource policies] KMS key policy denies this admin user: kms:Encrypt: aws=deny emulator=deny HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/admin2-75390ff2 is not authorized to perform: kms:Encrypt on resource: 
+OK   [resource policies] secret resource policy denies this admin user: GetSecretValue: aws=deny emulator=deny HTTP 400 AccessDeniedException: User: arn:aws:iam::000000000000:user/admin2-75390ff2 is not authorized to perform: secretsmanager:GetSecretV
+OK   [resource policies] no identity policy, bucket policy allows this user: s3:PutObject: aws=allow emulator=allow 
+OK   [identity policies] PutObject allowed on bucket A only: put to bucket A: aws=allow emulator=allow 
+OK   [identity policies] PutObject allowed on bucket A only: put to bucket B: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/scoped-75390ff2 is not authorized to perform: s3:PutObject on resource: "arn:aws
+OK   [identity policies] Allow NotAction s3:*: sqs:SendMessage: aws=allow emulator=allow 
+OK   [identity policies] Allow NotAction s3:*: s3:PutObject: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/notaction-75390ff2 is not authorized to perform: s3:PutObject on resource: "arn:
+OK   [user with no policies] s3:ListBucket (ListObjectsV2): aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: s3:ListBucket on resource: "arn
+OK   [user with no policies] s3:GetObject: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/no-policy-75390ff2 is not authorized to perform: s3:GetObject on resource: "arn:
+OK   [roles and sessions] admin user assumes a role that trusts only lambda.amazonaws.com: aws=deny emulator=deny HTTP 403 AccessDenied: User: arn:aws:iam::000000000000:user/admin-75390ff2 is not authorized to perform: sts:AssumeRole on resource: arn:aws
+GAP  [roles and sessions] no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself): aws=deny emulator=allow 
+GAP  [roles and sessions] no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser: aws=deny emulator=allow 
+GAP  [roles and sessions] admin role assumed with a GetObject-only session policy: s3:PutObject: aws=deny emulator=allow 
+OK   [service-to-service] EventBridge rule -> SQS queue with no queue policy: aws=not delivered emulator=not delivered
+OK   [service-to-service] SNS topic -> SQS queue with no queue policy: aws=not delivered emulator=not delivered
+
+27/32 cases match documented AWS behaviour -> /root/results/aws-emulator-iam-gap.json

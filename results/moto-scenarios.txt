@@ -1,0 +1,24 @@
+partial  7/9  S3: objects, presigned URLs, multipart, versioning
+           FAIL expired presigned GET is refused (AWS: 403): HTTP 200 b'hello'
+           FAIL presigned PUT: HTTP 200, stored b''
+partial  4/5  SQS: visibility timeout, DLQ, redrive back
+           FAIL StartMessageMoveTask redrives DLQ back to source: 500: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+pass     6/6  DynamoDB: conditional writes, transactions, streams
+partial  2/4  Lambda: create, invoke, error, cold vs warm
+           FAIL handler exception surfaces as FunctionError: FunctionError=Handled body={'errorType': 'ValueError', 'errorMessage': 'boom', 'stackTrace': ['  File "/var/task/app.py", line 24, in handler\n    raise ValueError("boom")\n']}
+           FAIL function calls S3 with boto3 (emulator-side SDK): FunctionError=Handled body={'errorType': 'EndpointConnectionError', 'errorMessage': 'Could not connect to the endpoint URL: "http://host.docker.internal:5000/ft-lambda-042ef7dc/from-lambda.txt"', 'stackTrace': ['  File "/var/task/app.py", line 29, in handler\n    boto3.client("s3").put_object(Bucket=event["s3_bucket"], Key="from-lambda.txt", Body=b"hi")\n', '  File "/var/lang/lib/python3.12/site-packages/botocore/client.py", line 606, in _api_call\n    return self._make_api_call(operation_name, 
+pass     2/2  EventBridge rule to SQS target
+pass     2/2  SNS fan-out to two SQS queues, raw + filter policy
+partial  5/6  KMS: encrypt, decrypt, context, data keys
+           FAIL disabled key refuses Encrypt (AWS: DisabledException): no error, expected DisabledException
+pass     3/3  Secrets Manager: versions, stages, deletion
+partial  1/3  Step Functions: Choice, Wait, Lambda task, Fail
+           FAIL Choice -> Wait -> Lambda task succeeds: status=RUNNING output={} error=None cause=None
+           FAIL Fail state ends the execution with its error: status=RUNNING error=None
+
+32/40 checks passed in 141.8 s -> /root/results/moto-scenarios.json

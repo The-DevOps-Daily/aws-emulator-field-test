@@ -1,0 +1,25 @@
+QueueUrl=https://sqs.us-east-1.amazonaws.com/000000000000/js-demo differs from SQSClient resolved endpoint=https://127.0.0.1:9297/, using QueueUrl host as endpoint.
+Set [endpoint=string] or [useQueueUrlAsEndpoint=false] on the SQSClient.
+{
+  "node": "v22.23.5",
+  "results": [
+    {
+      "name": "S3 put/get",
+      "ok": true,
+      "detail": "from-js",
+      "ms": 167
+    },
+    {
+      "name": "DynamoDB put/get",
+      "ok": true,
+      "detail": "{\"v\":{\"S\":\"x\"},\"id\":{\"S\":\"1\"}}",
+      "ms": 3039
+    },
+    {
+      "name": "SQS send/receive",
+      "ok": false,
+      "detail": "InvalidClientTokenId: The security token included in the request is invalid.",
+      "ms": 376
+    }
+  ]
+}

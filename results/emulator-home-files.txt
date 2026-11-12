@@ -1,0 +1,7 @@
+total 24
+drwx------ 2 root root 4096 Nov 12 08:57 .
+drwxr-xr-x 3 root root 4096 Nov 12 08:57 ..
+-rw------- 1 root root  566 Nov 12 08:57 ca.pem
+-rw------- 1 root root  157 Nov 12 08:57 config
+-rw------- 1 root root  116 Nov 12 08:57 emulator_credentials
+-rw------- 1 root root  551 Nov 12 08:57 truststore.p12

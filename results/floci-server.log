@@ -1,0 +1,174 @@
+ _____  _      ___   ____   __
+|  ___|| |    / _ \ / ___| | |
+| |_   | |   | | | || |    | |
+|  _|  | |___| |_| || |__  | |
+|_|    |_____|\___/ \____| |_|
+
+   AWS Local Emulator  ·  Always Free
+
+            Powered by Quarkus 3.40.1
+2026-11-12 09:25:58,129 INFO  [io.git.hec.flo.cor.com.doc.ContainerDetector] Container detection result: true
+2026-11-12 09:25:58,196 INFO  [io.git.hec.flo.ser.clo.CloudTrailLogWriter] CloudTrail log writer started (flushIntervalSeconds=60)
+2026-11-12 09:25:58,196 INFO  [io.git.hec.flo.ser.fir.FirehoseService] Firehose buffer flusher started (tick every 1s)
+2026-11-12 09:25:58,197 INFO  [io.git.hec.flo.ser.iot.IotMqttBrokerService] IoT MQTT broker auto-start disabled by configuration
+2026-11-12 09:25:58,197 INFO  [io.git.hec.flo.cor.com.doc.ContainerDetector] Container detection result: true
+2026-11-12 09:25:58,199 INFO  [io.git.hec.flo.cor.com.dns.EmbeddedDnsServer] Embedded DNS server started on 172.17.0.2:53, resolving [localhost.floci.io, localhost.localstack.cloud] → 172.17.0.2
+2026-11-12 09:25:58,209 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] === AWS Local Emulator 2.4.0 Starting ===
+2026-11-12 09:25:58,209 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Endpoint:  http://0.0.0.0:4566
+2026-11-12 09:25:58,209 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Region:    us-east-1  Account: 000000000000
+2026-11-12 09:25:58,210 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Storage:   memory  Path: /app/data
+2026-11-12 09:25:58,210 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] TLS:       disabled (HTTP only)
+2026-11-12 09:25:58,210 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] IAM:       policy enforcement disabled (set FLOCI_SERVICES_IAM_ENFORCEMENT_ENABLED=true to enforce)
+2026-11-12 09:25:58,210 INFO  [io.git.hec.flo.cor.sto.PersistentPathValidator] Storage mode: persistent (state for resourceexplorer2=hybrid is written to /app/data)
+2026-11-12 09:25:58,210 INFO  [io.git.hec.flo.cor.com.ServiceRegistry] Enabled services: [ssm, sqs, s3, dynamodb, sns, lambda, apigateway, iam, msk, amazonmq, elasticache, memorydb, rds, rds-data, dsql, neptune, docdb, redshift, redshift-data, redshift-serverless, eventbridge, cloudmap, emr, emrserverless, wafv2, scheduler, cloudwatchlogs, cloudwatchmetrics, secretsmanager, apigatewayv2, kinesis, kinesisanalytics, kms, cognito, stepfunctions, swf, cloudformation, acm, athena, glue, firehose, ses, opensearch, ec2, ecs, appconfig, appconfigdata, ecr, resource-groups, tagging, bedrock, bedrock-runtime, eks, mwaa, pipes, bedrock-agentcore-control, bedrock-agentcore, elbv2, elb, codebuild, batch, sagemaker, codedeploy, codepipeline, servicequotas, ram, configservice, cloudtrail, lightsail, cloudcontrol, ssoadmin, ssooidc, macie2, account, accessanalyzer, identitystore, budgets, detective, inspector2, securityhub, autoscaling, applicationautoscaling, elasticbeanstalk, backup, resourceexplorer2, fis, transfer, route53, textract, comprehend, rekognition, pricing, transcribe, translate, ce, cur, bcmpricingcalculator, timestreaminfluxdb, bcmdataexports, oam, cloudfront, appsync, s3vectors, s3tables, iot, iotdata, cloudhsmv2, organizations, rum, guardduty, route53resolver, connect, appintegrations, dlm, cognitoidentity, globalaccelerator, datasync, networkfirewall, servicecatalog, controlcatalog, controltower, aps, lakeformation, efs, codegurureviewer, codeartifact, verifiedpermissions, marketplace, dms]
+2026-11-12 09:25:58,210 INFO  [io.git.hec.flo.ser.app.gra.SchemaCreationWorker] SchemaCreationWorker started with 4 threads
+2026-11-12 09:25:58,213 INFO  [io.git.hec.flo.ser.dyn.DynamoDbTtlService] DynamoDB TTL sweeper scheduled (60s interval)
+2026-11-12 09:25:58,214 INFO  [io.git.hec.flo.ser.lam.SqsEventSourcePoller] SqsEventSourcePoller initialized, 0 ESM(s) active
+2026-11-12 09:25:58,215 INFO  [io.git.hec.flo.ser.lam.DynamoDbStreamsEventSourcePoller] DynamoDbStreamsEventSourcePoller initialized
+2026-11-12 09:25:58,221 INFO  [io.git.hec.flo.cor.com.doc.DockerClientProducer] Creating control-plane DockerClient pool (maxConnections=1,024) for host: unix:///var/run/docker.sock
+2026-11-12 09:25:58,233 INFO  [io.git.hec.flo.cor.com.doc.DockerClientProducer] Wrapping control-plane docker transport in transient-I/O retry
+2026-11-12 09:25:58,253 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] === AWS Local Emulator Ready ===
+2026-11-12 09:25:58,253 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Ready.
+2026-11-12 09:25:58,253 INFO  [io.git.hec.flo.ser.ec2.Ec2MetadataServer] EC2 IMDS server listening on port 9169
+2026-11-12 09:25:58,254 INFO  [io.git.hec.flo.ser.sch.ScheduleDispatcher] Scheduler dispatcher started (tick every 10s)
+2026-11-12 09:25:58,255 INFO  [io.git.hec.flo.ser.sqs.SqsRetentionSweeper] SQS retention sweeper scheduled (60s interval)
+2026-11-12 09:25:58,256 INFO  [io.git.hec.flo.ser.sec.SecretRotationScheduler] Secrets Manager rotation scheduler started (tick every 60s)
+2026-11-12 09:25:58,260 INFO  [io.git.hec.flo.ser.ec2.FlowLogService] FlowLog generator scheduled (every 60s)
+2026-11-12 09:25:58,260 INFO  [io.git.hec.flo.con.PartitionStartupValidator] Partition: aws (default-region us-east-1, dns suffix amazonaws.com)
+2026-11-12 09:25:58,261 INFO  [io.git.hec.flo.ser.lam.WarmPool] Warm pool idle eviction enabled: timeout=300s, check interval=30s
+2026-11-12 09:25:58,277 INFO  [io.quarkus] floci 2.4.0 native (powered by Quarkus 3.40.1) started in 0.152s. Listening on: http://0.0.0.0:4566
+2026-11-12 09:25:58,277 INFO  [io.quarkus] Profile prod activated. 
+2026-11-12 09:25:58,277 INFO  [io.quarkus] Installed features: [cdi, config-yaml, rest, rest-jackson, security, smallrye-context-propagation, vertx]
+2026-11-12 09:26:02,080 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: fieldtest-28c09298 in region: us-east-1
+2026-11-12 09:26:04,707 INFO  [io.git.hec.flo.ser.s3.S3Service] Initiated multipart upload: fieldtest-28c09298/big.bin, uploadId=01a1cf14-1ea3-844a-b7fc-43ee27d5e5db
+2026-11-12 09:26:05,238 INFO  [io.git.hec.flo.ser.s3.S3Service] Completed multipart upload: fieldtest-28c09298/big.bin, uploadId=01a1cf14-1ea3-844a-b7fc-43ee27d5e5db, parts=3
+2026-11-12 09:26:05,256 INFO  [io.git.hec.flo.ser.s3.S3Service] Initiated multipart upload: fieldtest-28c09298/small.bin, uploadId=01a1cf14-20c8-8975-b5da-498d04f46813
+2026-11-12 09:26:05,405 INFO  [io.git.hec.flo.ser.s3.S3Service] Set versioning for bucket fieldtest-28c09298: Enabled
+2026-11-12 09:26:05,496 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: ft-dlq-28c09298 in region us-east-1
+2026-11-12 09:26:05,512 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: ft-main-28c09298 in region us-east-1
+2026-11-12 09:26:10,552 INFO  [io.git.hec.flo.ser.sqs.SqsService] Moved 1 messages to DLQ http://localhost:4566/000000000000/ft-dlq-28c09298
+2026-11-12 09:26:11,066 INFO  [io.git.hec.flo.ser.sqs.SqsService] Move task task-c7e94d97-6bf1-457c-bcb1-14e8c55486b3 completed: moved 1 messages from arn:aws:sqs:us-east-1:000000000000:ft-dlq-28c09298 to original source
+2026-11-12 09:26:11,084 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created FIFO queue: ft-28c09298.fifo in region us-east-1
+2026-11-12 09:26:11,134 INFO  [io.git.hec.flo.ser.dyn.DynamoDbService] Created table: ft-orders-28c09298 in region us-east-1
+2026-11-12 09:26:11,135 INFO  [io.git.hec.flo.ser.dyn.DynamoDbStreamService] Enabled stream for table ft-orders-28c09298 in region us-east-1: arn:aws:dynamodb:us-east-1:000000000000:table/ft-orders-28c09298/stream/2026-11-12T09:26:11.134
+2026-11-12 09:26:11,358 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: ft-fn-28c09298
+2026-11-12 09:26:11,385 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: awslambda-us-east-1-tasks in region: us-east-1
+2026-11-12 09:26:11,386 INFO  [io.git.hec.flo.ser.lam.LambdaService] Created Lambda function: ft-fn-28c09298 in region us-east-1
+2026-11-12 09:26:11,412 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Launching container for function: ft-fn-28c09298
+2026-11-12 09:26:11,413 INFO  [io.git.hec.flo.ser.lam.run.RuntimeApiServer] RuntimeApiServer started on port 12000
+2026-11-12 09:26:11,447 INFO  [io.git.hec.flo.cor.com.doc.CurrentContainerNetworkResolver] Detected current Docker network for spawned containers: bridge (172.17.0.2)
+2026-11-12 09:26:11,448 INFO  [io.git.hec.flo.cor.com.doc.DockerHostResolver] Running in Docker — using current network IP for Runtime API: 172.17.0.2
+2026-11-12 09:26:11,479 INFO  [io.git.hec.flo.ser.lam.lau.ImageCacheService] Pulling image: public.ecr.aws/lambda/python:3.12
+2026-11-12 09:26:24,339 INFO  [io.git.hec.flo.ser.lam.lau.ImageCacheService] Image pulled successfully: public.ecr.aws/lambda/python:3.12
+2026-11-12 09:26:25,191 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Created container 5e12a79c54ec1a3c7aedfad51b05a2e25d2fead2fd08d3764dbc727e82b29877 (name=floci-aws-ft-fn-28c09298-a741c209, not yet started)
+2026-11-12 09:26:25,191 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Created container 5e12a79c54ec1a3c7aedfad51b05a2e25d2fead2fd08d3764dbc727e82b29877 for function ft-fn-28c09298
+2026-11-12 09:26:25,477 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Started container 5e12a79c54ec1a3c7aedfad51b05a2e25d2fead2fd08d3764dbc727e82b29877
+2026-11-12 09:26:25,477 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log group: /aws/lambda/ft-fn-28c09298 in region us-east-1
+2026-11-12 09:26:25,478 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log stream: /aws/lambda/ft-fn-28c09298/2026/11/12/[$LATEST]a741c209
+2026-11-12 09:26:25,481 INFO  [io.git.hec.flo.cor.com.doc.DockerClientProducer] Creating streaming DockerClient pool (maxConnections=512) for host: unix:///var/run/docker.sock
+2026-11-12 09:26:25,620 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:ft-fn-28c09298] [ERROR] ValueError: boomTraceback (most recent call last):  File "/var/task/app.py", line 24, in handler    raise ValueError("boom")
+2026-11-12 09:26:25,643 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: ft-lambda-28c09298 in region: us-east-1
+2026-11-12 09:26:26,328 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: ft-events-28c09298 in region us-east-1
+2026-11-12 09:26:26,342 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutRule
+2026-11-12 09:26:26,343 INFO  [io.git.hec.flo.ser.eve.EventBridgeService] EventBridge initialized, 0 scheduler(s) restored
+2026-11-12 09:26:26,343 INFO  [io.git.hec.flo.ser.eve.EventBridgeService] Put rule: ft-orders-28c09298 on bus default
+2026-11-12 09:26:26,350 INFO  [io.git.hec.flo.ser.sqs.SqsService] Updated attributes for queue: http://localhost:4566/000000000000/ft-events-28c09298
+2026-11-12 09:26:26,357 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutTargets
+2026-11-12 09:26:26,357 INFO  [io.git.hec.flo.ser.eve.EventBridgeService] Put 1 targets on rule ft-orders-28c09298
+2026-11-12 09:26:26,365 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutEvents
+2026-11-12 09:26:36,466 INFO  [io.git.hec.flo.ser.sns.SnsService] Created SNS topic: ft-topic-28c09298 in region us-east-1
+2026-11-12 09:26:36,474 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: ft-all-28c09298 in region us-east-1
+2026-11-12 09:26:36,488 INFO  [io.git.hec.flo.ser.sqs.SqsService] Updated attributes for queue: http://localhost:4566/000000000000/ft-all-28c09298
+2026-11-12 09:26:36,497 INFO  [io.git.hec.flo.ser.sns.SnsService] Subscribed arn:aws:sqs:us-east-1:000000000000:ft-all-28c09298 (sqs) to topic arn:aws:sns:us-east-1:000000000000:ft-topic-28c09298 in us-east-1 with attributes: {RawMessageDelivery=true}
+2026-11-12 09:26:36,504 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: ft-only-a-28c09298 in region us-east-1
+2026-11-12 09:26:36,516 INFO  [io.git.hec.flo.ser.sqs.SqsService] Updated attributes for queue: http://localhost:4566/000000000000/ft-only-a-28c09298
+2026-11-12 09:26:36,522 INFO  [io.git.hec.flo.ser.sns.SnsService] Subscribed arn:aws:sqs:us-east-1:000000000000:ft-only-a-28c09298 (sqs) to topic arn:aws:sns:us-east-1:000000000000:ft-topic-28c09298 in us-east-1 with attributes: {FilterPolicy={"type": ["a"]}}
+2026-11-12 09:26:36,757 INFO  [io.git.hec.flo.ser.sns.SnsMessageSigner] Generated SNS signing certificate SimpleNotificationService-11d269a30eaeaff2172162275a088d92.pem
+2026-11-12 09:26:36,764 INFO  [io.git.hec.flo.ser.sns.SnsService] Published message 27612068-3680-473d-8c74-083ad63a602b to topic arn:aws:sns:us-east-1:000000000000:ft-topic-28c09298
+2026-11-12 09:26:36,770 INFO  [io.git.hec.flo.ser.sns.SnsService] Published message dfe06ece-87b5-4ed2-82c3-6b33a74297cd to topic arn:aws:sns:us-east-1:000000000000:ft-topic-28c09298
+2026-11-12 09:26:44,919 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: CreateKey
+2026-11-12 09:26:44,919 INFO  [io.git.hec.flo.ser.kms.KmsService] Created KMS key: b9030caf-2327-49e4-a982-d0f2be238df5 (ENCRYPT_DECRYPT/SYMMETRIC_DEFAULT, origin AWS_KMS) in us-east-1
+2026-11-12 09:26:44,927 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: CreateAlias
+2026-11-12 09:26:44,928 INFO  [io.git.hec.flo.ser.kms.KmsService] Created KMS alias: alias/ft-28c09298 -> b9030caf-2327-49e4-a982-d0f2be238df5
+2026-11-12 09:26:44,934 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Encrypt
+2026-11-12 09:26:44,941 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Decrypt
+2026-11-12 09:26:44,947 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Decrypt
+2026-11-12 09:26:44,954 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Decrypt
+2026-11-12 09:26:44,960 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: GenerateDataKey
+2026-11-12 09:26:44,965 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Decrypt
+2026-11-12 09:26:44,971 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: DisableKey
+2026-11-12 09:26:44,971 INFO  [io.git.hec.flo.ser.kms.KmsService] Disabled KMS key: b9030caf-2327-49e4-a982-d0f2be238df5 in us-east-1
+2026-11-12 09:26:44,976 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Encrypt
+2026-11-12 09:26:44,982 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: EnableKey
+2026-11-12 09:26:44,982 INFO  [io.git.hec.flo.ser.kms.KmsService] Enabled KMS key: b9030caf-2327-49e4-a982-d0f2be238df5 in us-east-1
+2026-11-12 09:26:45,000 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: CreateSecret
+2026-11-12 09:26:45,000 INFO  [io.git.hec.flo.ser.sec.SecretsManagerService] Created secret: ft/db-28c09298 in region us-east-1
+2026-11-12 09:26:45,007 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:45,014 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: PutSecretValue
+2026-11-12 09:26:45,014 INFO  [io.git.hec.flo.ser.sec.SecretsManagerService] Put secret value for: ft/db-28c09298
+2026-11-12 09:26:45,021 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:45,026 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:45,036 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: DeleteSecret
+2026-11-12 09:26:45,036 INFO  [io.git.hec.flo.ser.sec.SecretsManagerService] Scheduled deletion of secret: ft/db-28c09298 at 2026-11-19T09:26:45.036466744Z
+2026-11-12 09:26:45,042 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:45,050 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: RestoreSecret
+2026-11-12 09:26:45,050 INFO  [io.git.hec.flo.ser.sec.SecretsManagerService] Restored secret: ft/db-28c09298
+2026-11-12 09:26:45,055 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:45,088 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: ft-sfn-28c09298
+2026-11-12 09:26:45,104 INFO  [io.git.hec.flo.ser.ste.StepFunctionsService] Created State Machine: arn:aws:states:us-east-1:000000000000:stateMachine:ft-flow-28c09298
+2026-11-12 09:26:45,110 INFO  [io.git.hec.flo.ser.ste.StepFunctionsService] Started execution: arn:aws:states:us-east-1:000000000000:execution:ft-flow-28c09298:4e4dbb49-23a3-490b-85fa-a25dbaf428b8
+2026-11-12 09:26:46,116 INFO  [io.git.hec.flo.ser.ste.StepFunctionsService] Execution arn:aws:states:us-east-1:000000000000:execution:ft-flow-28c09298:4e4dbb49-23a3-490b-85fa-a25dbaf428b8 completed with status SUCCEEDED
+2026-11-12 09:26:46,134 INFO  [io.git.hec.flo.ser.ste.StepFunctionsService] Started execution: arn:aws:states:us-east-1:000000000000:execution:ft-flow-28c09298:a4828caa-d826-4bd3-b10a-001657906fe4
+2026-11-12 09:26:46,134 INFO  [io.git.hec.flo.ser.ste.StepFunctionsService] Execution arn:aws:states:us-east-1:000000000000:execution:ft-flow-28c09298:a4828caa-d826-4bd3-b10a-001657906fe4 completed with status FAILED
+2026-11-12 09:26:47,150 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: iamgap-ed8fc08b in region: us-east-1
+2026-11-12 09:26:47,162 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: iamgap-ed8fc08b in region us-east-1
+2026-11-12 09:26:47,174 INFO  [io.git.hec.flo.ser.dyn.DynamoDbService] Created table: iamgap-ed8fc08b in region us-east-1
+2026-11-12 09:26:47,222 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: CreateKey
+2026-11-12 09:26:47,222 INFO  [io.git.hec.flo.ser.kms.KmsService] Created KMS key: 4e0a2446-0861-44fd-9544-7638f1876b2b (ENCRYPT_DECRYPT/SYMMETRIC_DEFAULT, origin AWS_KMS) in us-east-1
+2026-11-12 09:26:47,232 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: CreateSecret
+2026-11-12 09:26:47,232 INFO  [io.git.hec.flo.ser.sec.SecretsManagerService] Created secret: iamgap/ed8fc08b in region us-east-1
+2026-11-12 09:26:47,241 INFO  [io.git.hec.flo.ser.sns.SnsService] Created SNS topic: iamgap-ed8fc08b in region us-east-1
+2026-11-12 09:26:47,248 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: no-policy-ed8fc08b
+2026-11-12 09:26:47,256 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: no-policy-ed8fc08b
+2026-11-12 09:26:47,701 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Encrypt
+2026-11-12 09:26:47,721 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:47,747 INFO  [io.git.hec.flo.ser.sns.SnsService] Published message bafe81cc-d266-4e35-bfa1-3500bdcffd49 to topic arn:aws:sns:us-east-1:000000000000:iamgap-ed8fc08b
+2026-11-12 09:26:47,770 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutEvents
+2026-11-12 09:26:47,809 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: escalate-ed8fc08b
+2026-11-12 09:26:47,816 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: admin-ed8fc08b
+2026-11-12 09:26:47,829 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: admin-ed8fc08b
+2026-11-12 09:26:48,022 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: admin-deny-ed8fc08b
+2026-11-12 09:26:48,033 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: admin-deny-ed8fc08b
+2026-11-12 09:26:48,256 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM policy: arn:aws:iam::000000000000:policy/read-only-boundary-ed8fc08b
+2026-11-12 09:26:48,263 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: bounded-ed8fc08b
+2026-11-12 09:26:48,276 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: bounded-ed8fc08b
+2026-11-12 09:26:48,469 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: cond-ed8fc08b
+2026-11-12 09:26:48,480 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: cond-ed8fc08b
+2026-11-12 09:26:48,732 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: admin2-ed8fc08b
+2026-11-12 09:26:48,745 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: admin2-ed8fc08b
+2026-11-12 09:26:48,779 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: iamgap-pol-ed8fc08b in region: us-east-1
+2026-11-12 09:26:48,964 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: iamgap-denyall-ed8fc08b in region: us-east-1
+2026-11-12 09:26:48,993 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: CreateKey
+2026-11-12 09:26:48,993 INFO  [io.git.hec.flo.ser.kms.KmsService] Created KMS key: 153679fb-1535-44fc-a55e-5311c6866d12 (ENCRYPT_DECRYPT/SYMMETRIC_DEFAULT, origin AWS_KMS) in us-east-1
+2026-11-12 09:26:49,023 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller kms action: Encrypt
+2026-11-12 09:26:49,031 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: PutResourcePolicy
+2026-11-12 09:26:49,031 INFO  [io.git.hec.flo.ser.sec.SecretsManagerService] Put resource policy on secret: iamgap/ed8fc08b
+2026-11-12 09:26:49,059 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller secretsmanager action: GetSecretValue
+2026-11-12 09:26:49,066 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: granted-ed8fc08b
+2026-11-12 09:26:49,072 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: granted-ed8fc08b
+2026-11-12 09:26:49,104 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: iamgap-grant-ed8fc08b in region: us-east-1
+2026-11-12 09:26:49,287 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: scoped-ed8fc08b
+2026-11-12 09:26:49,298 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: scoped-ed8fc08b
+2026-11-12 09:26:49,560 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM user: notaction-ed8fc08b
+2026-11-12 09:26:49,571 INFO  [io.git.hec.flo.ser.iam.IamService] Created access key for user: notaction-ed8fc08b
+2026-11-12 09:26:49,849 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: svc-only-ed8fc08b
+2026-11-12 09:26:49,874 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: acct-trust-ed8fc08b
+2026-11-12 09:26:49,940 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: iamgap-ev-ed8fc08b in region us-east-1
+2026-11-12 09:26:49,954 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutRule
+2026-11-12 09:26:49,954 INFO  [io.git.hec.flo.ser.eve.EventBridgeService] Put rule: iamgap-ed8fc08b on bus default
+2026-11-12 09:26:49,961 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutTargets
+2026-11-12 09:26:49,962 INFO  [io.git.hec.flo.ser.eve.EventBridgeService] Put 1 targets on rule iamgap-ed8fc08b
+2026-11-12 09:26:49,968 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller events action: PutEvents
+2026-11-12 09:26:49,981 INFO  [io.git.hec.flo.ser.sqs.SqsService] Created standard queue: iamgap-sns-ed8fc08b in region us-east-1
+2026-11-12 09:26:49,991 INFO  [io.git.hec.flo.ser.sns.SnsService] Subscribed arn:aws:sqs:us-east-1:000000000000:iamgap-sns-ed8fc08b (sqs) to topic arn:aws:sns:us-east-1:000000000000:iamgap-ed8fc08b in us-east-1
+2026-11-12 09:26:50,003 INFO  [io.git.hec.flo.ser.sns.SnsService] Published message adbcdbe3-c77c-487c-b46f-756c0d773fff to topic arn:aws:sns:us-east-1:000000000000:iamgap-ed8fc08b

@@ -1,0 +1,5 @@
+{"timestamp":"2026-11-12T08:57:57.024391Z","level":"INFO","fields":{"message":"aws-emulator emulator starting"},"target":"aws_emulator"}
+This emulator collects usage and error telemetry: disabled (via the embedding configuration) — to turn it back on, remove every opt-out setting and restart
+{"timestamp":"2026-11-12T08:57:57.135303Z","level":"INFO","fields":{"message":"request authentication enabled","credentials_file":"/tmp/tmp.AT3VamFven/.aws/emulator/9297/emulator_credentials"},"target":"aws_emulator_server"}
+{"timestamp":"2026-11-12T08:57:57.135536Z","level":"INFO","fields":{"message":"emulator server information","endpoint_url":"https://127.0.0.1:9297","health_check_url":"https://127.0.0.1:9297/__admin/health","config_file":"/tmp/tmp.AT3VamFven/.aws/emulator/9297/config","ca_file":"/tmp/tmp.AT3VamFven/.aws/emulator/9297/ca.pem","java_truststore_file":"/tmp/tmp.AT3VamFven/.aws/emulator/9297/truststore.p12"},"target":"aws_emulator_server"}
+{"timestamp":"2026-11-12T08:57:57.208741Z","level":"INFO","fields":{"message":"shutdown signal received; stopping emulator server"},"target":"aws_emulator_server"}

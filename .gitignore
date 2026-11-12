@@ -1,0 +1,5 @@
+.terraform/
+*.tfstate*
+fn.zip
+node_modules/
+__pycache__/

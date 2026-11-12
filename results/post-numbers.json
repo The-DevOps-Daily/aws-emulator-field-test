@@ -1,0 +1,403 @@
+{
+  "emulator_version": "Version: 1.0.322",
+  "deb_mib": 163.0,
+  "binary_bytes": 970692256,
+  "installed_mib": 927.1,
+  "start_warm_cache_ms": {
+    "runs": 10,
+    "min": 338,
+    "median": 383.5,
+    "max": 470
+  },
+  "start_cold_cache_ms": {
+    "runs": 5,
+    "min": 1260,
+    "median": 1325,
+    "max": 1399
+  },
+  "rss_at_ready_mib_median": 282.4,
+  "rss_anon_at_ready_mib_median": 172.5,
+  "load_steps": [
+    {
+      "step": "baseline",
+      "calls": null,
+      "payload_mib": null,
+      "call_ms_p50": null,
+      "call_ms_p95": null,
+      "mem_mib": {
+        "VmHWM": 281.7,
+        "VmRSS": 281.7,
+        "RssAnon": 172.5,
+        "RssFile": 109.3
+      },
+      "result": null
+    },
+    {
+      "step": "s3: 600 x 100 KiB PutObject",
+      "calls": 600,
+      "payload_mib": 58.6,
+      "call_ms_p50": 14.66,
+      "call_ms_p95": 32.35,
+      "mem_mib": {
+        "VmHWM": 367.2,
+        "VmRSS": 367.2,
+        "RssAnon": 236.6,
+        "RssFile": 130.6
+      },
+      "result": null
+    },
+    {
+      "step": "s3 cap probe: +10 MiB object",
+      "calls": null,
+      "payload_mib": null,
+      "call_ms_p50": null,
+      "call_ms_p95": null,
+      "mem_mib": null,
+      "result": "An error occurred (ValidationException) when calling the PutObject operation: storing \"big-10mib\" would leave the bucket \"load-test\" holding 71980451 bytes of objects, past the 67108864 bytes this emulator keeps per bucket"
+    },
+    {
+      "step": "dynamodb: 20000 x 1 KiB items (800 BatchWriteItem)",
+      "calls": 800,
+      "payload_mib": 19.5,
+      "call_ms_p50": 13.64,
+      "call_ms_p95": 33.07,
+      "mem_mib": {
+        "VmHWM": 411.5,
+        "VmRSS": 411.5,
+        "RssAnon": 276.4,
+        "RssFile": 135.1
+      },
+      "result": null
+    },
+    {
+      "step": "sqs: 900 x 1 KiB messages (90 SendMessageBatch)",
+      "calls": 90,
+      "payload_mib": 0.88,
+      "call_ms_p50": 13.08,
+      "call_ms_p95": 29.71,
+      "mem_mib": {
+        "VmHWM": 415.4,
+        "VmRSS": 415.4,
+        "RssAnon": 277.2,
+        "RssFile": 138.2
+      },
+      "result": null
+    },
+    {
+      "step": "sqs cap probe: +110 messages",
+      "calls": null,
+      "payload_mib": null,
+      "call_ms_p50": null,
+      "call_ms_p95": null,
+      "mem_mib": null,
+      "result": "An error occurred (OverLimit) when calling the SendMessageBatch operation: This emulator holds at most 1000 messages per queue; queue load-test cannot take 10 more. Delete messages from it first."
+    },
+    {
+      "step": "after deleting everything + 15 s",
+      "calls": null,
+      "payload_mib": null,
+      "call_ms_p50": null,
+      "call_ms_p95": null,
+      "mem_mib": {
+        "VmHWM": 418.9,
+        "VmRSS": 418.9,
+        "RssAnon": 278.8,
+        "RssFile": 140.0
+      },
+      "result": null
+    }
+  ],
+  "scenarios": {
+    "passed": 40,
+    "total": 40,
+    "seconds": 38.0,
+    "per_scenario": [
+      [
+        "S3: objects, presigned URLs, multipart, versioning",
+        "pass",
+        9,
+        9
+      ],
+      [
+        "SQS: visibility timeout, DLQ, redrive back",
+        "pass",
+        5,
+        5
+      ],
+      [
+        "DynamoDB: conditional writes, transactions, streams",
+        "pass",
+        6,
+        6
+      ],
+      [
+        "Lambda: create, invoke, error, cold vs warm",
+        "pass",
+        4,
+        4
+      ],
+      [
+        "EventBridge rule to SQS target",
+        "pass",
+        2,
+        2
+      ],
+      [
+        "SNS fan-out to two SQS queues, raw + filter policy",
+        "pass",
+        2,
+        2
+      ],
+      [
+        "KMS: encrypt, decrypt, context, data keys",
+        "pass",
+        6,
+        6
+      ],
+      [
+        "Secrets Manager: versions, stages, deletion",
+        "pass",
+        3,
+        3
+      ],
+      [
+        "Step Functions: Choice, Wait, Lambda task, Fail",
+        "pass",
+        3,
+        3
+      ]
+    ],
+    "lambda_invoke_ms": [
+      369.0,
+      334.6,
+      353.9,
+      354.6
+    ],
+    "lambda_probe": {
+      "python": "3.14.0.alpha",
+      "platform": "linux",
+      "read /etc/hostname": "OSError: a Lambda function in this emulator cannot open a file of the host",
+      "os.getuid()": "OSError: a Lambda function in this emulator has no host filesystem or process to reach",
+      "socket.gethostname()": "OSError: a Lambda function in this emulator has no host network to reach",
+      "list /": "OSError: a Lambda function in this emulator has no host filesystem or process to reach",
+      "import subprocess": "ModuleNotFoundError: No module named '_signal'",
+      "env AWS_REGION": "'us-east-1'"
+    }
+  },
+  "iam": {
+    "matches": 27,
+    "cases": 32,
+    "gaps": [
+      "s3:ListAllMyBuckets",
+      "Allow * but permissions boundary allows only reads: s3:PutObject",
+      "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+      "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+      "admin role assumed with a GetObject-only session policy: s3:PutObject"
+    ]
+  },
+  "release_scores": {
+    "units": 42937,
+    "by_outcome": {
+      "fail": 18614,
+      "pass": 24243,
+      "skipped": 80
+    },
+    "pass_rate": 0.565,
+    "services_scored": 355
+  },
+  "release_scores_our_services": {
+    "dynamodb": 0.681,
+    "eventbridge": 0.714,
+    "iam": 0.58,
+    "kms": 0.713,
+    "lambda": 0.519,
+    "s3": 0.627,
+    "secretsmanager": 0.68,
+    "sns": 0.693,
+    "sqs": 0.678,
+    "sts": 0.478
+  },
+  "moto_scenarios": {
+    "passed": 32,
+    "total": 40,
+    "per_scenario": [
+      [
+        "S3: objects, presigned URLs, multipart, versioning",
+        "partial",
+        7,
+        9
+      ],
+      [
+        "SQS: visibility timeout, DLQ, redrive back",
+        "partial",
+        4,
+        5
+      ],
+      [
+        "DynamoDB: conditional writes, transactions, streams",
+        "pass",
+        6,
+        6
+      ],
+      [
+        "Lambda: create, invoke, error, cold vs warm",
+        "partial",
+        2,
+        4
+      ],
+      [
+        "EventBridge rule to SQS target",
+        "pass",
+        2,
+        2
+      ],
+      [
+        "SNS fan-out to two SQS queues, raw + filter policy",
+        "pass",
+        2,
+        2
+      ],
+      [
+        "KMS: encrypt, decrypt, context, data keys",
+        "partial",
+        5,
+        6
+      ],
+      [
+        "Secrets Manager: versions, stages, deletion",
+        "pass",
+        3,
+        3
+      ],
+      [
+        "Step Functions: Choice, Wait, Lambda task, Fail",
+        "partial",
+        1,
+        3
+      ]
+    ]
+  },
+  "moto_iam": {
+    "matches": 8,
+    "cases": 32,
+    "gaps": [
+      "s3:ListAllMyBuckets",
+      "s3:PutObject",
+      "sqs:SendMessage",
+      "dynamodb:PutItem",
+      "kms:Encrypt",
+      "secretsmanager:GetSecretValue",
+      "sns:Publish",
+      "events:PutEvents",
+      "iam:CreateUser",
+      "Allow * plus explicit Deny s3:PutObject",
+      "Allow * but permissions boundary allows only reads: s3:PutObject",
+      "Allow PutObject only with SSE-KMS: put without SSE",
+      "KMS key policy denies this admin user: kms:Encrypt",
+      "secret resource policy denies this admin user: GetSecretValue",
+      "PutObject allowed on bucket A only: put to bucket B",
+      "Allow NotAction s3:*: s3:PutObject",
+      "s3:ListBucket (ListObjectsV2)",
+      "s3:GetObject",
+      "admin user assumes a role that trusts only lambda.amazonaws.com",
+      "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+      "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+      "admin role assumed with a GetObject-only session policy: s3:PutObject",
+      "EventBridge rule -> SQS queue with no queue policy",
+      "SNS topic -> SQS queue with no queue policy"
+    ]
+  },
+  "floci_scenarios": {
+    "passed": 38,
+    "total": 40,
+    "per_scenario": [
+      [
+        "S3: objects, presigned URLs, multipart, versioning",
+        "partial",
+        8,
+        9
+      ],
+      [
+        "SQS: visibility timeout, DLQ, redrive back",
+        "pass",
+        5,
+        5
+      ],
+      [
+        "DynamoDB: conditional writes, transactions, streams",
+        "pass",
+        6,
+        6
+      ],
+      [
+        "Lambda: create, invoke, error, cold vs warm",
+        "pass",
+        4,
+        4
+      ],
+      [
+        "EventBridge rule to SQS target",
+        "partial",
+        1,
+        2
+      ],
+      [
+        "SNS fan-out to two SQS queues, raw + filter policy",
+        "pass",
+        2,
+        2
+      ],
+      [
+        "KMS: encrypt, decrypt, context, data keys",
+        "pass",
+        6,
+        6
+      ],
+      [
+        "Secrets Manager: versions, stages, deletion",
+        "pass",
+        3,
+        3
+      ],
+      [
+        "Step Functions: Choice, Wait, Lambda task, Fail",
+        "pass",
+        3,
+        3
+      ]
+    ]
+  },
+  "floci_iam": {
+    "matches": 6,
+    "cases": 32,
+    "gaps": [
+      "s3:ListAllMyBuckets",
+      "s3:PutObject",
+      "sqs:SendMessage",
+      "dynamodb:PutItem",
+      "kms:Encrypt",
+      "secretsmanager:GetSecretValue",
+      "sns:Publish",
+      "events:PutEvents",
+      "iam:CreateUser",
+      "Allow * plus explicit Deny s3:PutObject",
+      "Allow * but permissions boundary allows only reads: s3:PutObject",
+      "Allow PutObject only with SSE-KMS: put without SSE",
+      "bucket policy denies this admin user: s3:PutObject",
+      "bucket policy denies everyone over HTTPS: emulator's own key PutObject",
+      "KMS key policy denies this admin user: kms:Encrypt",
+      "secret resource policy denies this admin user: GetSecretValue",
+      "PutObject allowed on bucket A only: put to bucket B",
+      "Allow NotAction s3:*: s3:PutObject",
+      "s3:ListBucket (ListObjectsV2)",
+      "s3:GetObject",
+      "admin user assumes a role that trusts only lambda.amazonaws.com",
+      "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+      "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+      "admin role assumed with a GetObject-only session policy: s3:PutObject",
+      "EventBridge rule -> SQS queue with no queue policy",
+      "SNS topic -> SQS queue with no queue policy"
+    ]
+  },
+  "results_sha256": "9c043bb7bd1066f0c425b6e159e18dde9c067052955daf424f802093f2aa3070"
+}

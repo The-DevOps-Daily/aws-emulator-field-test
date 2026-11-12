@@ -1,0 +1,18 @@
+Usage: <emulator> [OPTIONS]
+  Starts an instance of the AWS Emulator.
+
+Global options:
+  -b, --bind <ip>            Address to bind. Default: 127.0.0.1 (EMULATOR_BIND_ADDRESS).
+  -p, --port <port>          Port to listen on; 0 picks a free one. Default: 9297
+                             (EMULATOR_DATA_PORT).
+  -h, --help                 Display this help.
+  -v, --version              Display the emulator version, release date and commit.
+  -t, --telemetry on|off     Usage telemetry for this run. Default: on; off always wins over
+                             EMULATOR_TELEMETRY and the config file, on cannot override them.
+  -a, --auth on|off          Require SigV4 signatures with this run's keys, written to
+                             <port>/emulator_credentials in its home folder. Default: on.
+  --idle-timeout <seconds>   Emulator exits after <seconds> without an API call.
+
+Admin routes:
+  GET /__admin/health
+      Return code of 200 indicates emulator working correctly.

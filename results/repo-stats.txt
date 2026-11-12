@@ -1,0 +1,143 @@
+== aws-emulator @ 7753983c6e (2026-11-10T20:39:05+00:00)
+commits: 29684
+first_commit: 2026-10-21T20:54:17+00:00 Scaffolder: Initial emulator scaffold
+-- commits by author
+  16664 IssueFinderAgent <aws-emulator@amazon.com>
+  12981 IssueFixerAgent <aws-emulator@amazon.com>
+     29 Scaffolder <aws-emulator@amazon.com>
+      6 TraceIdMigration <trace-id-migration@users.noreply.local>
+      4 ReleaseManagerAgent <aws-emulator@amazon.com>
+-- commits by committer
+  16664 IssueFinderAgent
+  12981 IssueFixerAgent
+     29 Scaffolder
+      6 TraceIdMigration
+      4 ReleaseManagerAgent
+-- message prefix (text before the first colon)
+  11774 Fix issue
+   8311 Merge origin/mainline
+   7167 file issues
+   1191 issue
+   1046 fix
+     94 WontFix
+     30 Fix a private issue
+     27 Fixes issue
+     17 Add 25 services to the scaffold
+      5 File issue
+      4 chore
+      4 Update core components
+-- Producer trailer
+  16768 Producer: issue-finder
+  12877 Producer: issue-fixer
+     29 Producer: scaffold
+      4 Producer: release-gate
+      2 Producer: maintenance
+-- busiest days
+   3734 2026-10-21
+   3127 2026-10-24
+   3055 2026-10-22
+   2970 2026-10-25
+   2277 2026-10-23
+-- commits per week
+  15163 2026-W43
+  10082 2026-W44
+   3330 2026-W45
+   1109 2026-W46
+-- tree
+service_crates: 436
+smithy_models: 437
+rs_files_excl_vendor: 58639
+rs_lines_excl_vendor: 16142920
+rs_lines_vendor: 55418
+op_files (services/*/src/ops/*.rs): 40130
+service_test_files (services/*/tests/*): 14099
+issues_do_not_work: 6544
+issues_now_work: 12708
+-- top-level hidden dirs
+/root/src/aws-emulator/.emulator:
+total 116
+drwxr-xr-x 2 root root   4096 Nov 12 09:11 .
+drwxr-xr-x 9 root root   4096 Nov 12 09:11 ..
+-rw-r--r-- 1 root root     36 Nov 12 09:11 license-header
+-rw-r--r-- 1 root root 104983 Nov 12 09:11 scaffolded-specs.json
+
+/root/src/aws-emulator/.github:
+total 20
+drwxr-xr-x 3 root root 4096 Nov 12 09:11 .
+drwxr-xr-x 9 root root 4096 Nov 12 09:11 ..
+-rw-r--r-- 1 root root  867 Nov 12 09:11 CONTRIBUTING.md
+drwxr-xr-x 2 root root 4096 Nov 12 09:11 ISSUE_TEMPLATE
+-rw-r--r-- 1 root root  245 Nov 12 09:11 pull_request_template.md
+/root/src/aws-emulator/.github/pull_request_template.md
+/root/src/aws-emulator/.github/CONTRIBUTING.md
+/root/src/aws-emulator/.github/ISSUE_TEMPLATE/feature-request.yml
+/root/src/aws-emulator/.github/ISSUE_TEMPLATE/behavior-differs.yml
+/root/src/aws-emulator/.github/ISSUE_TEMPLATE/config.yml
+-- largest service crates by .rs lines
+709186 service-com-amazonaws-ec2-amazonec2
+287486 service-com-amazonaws-cloudformation-cloudformation
+215385 service-com-amazonaws-lightsail-lightsail-20161128
+213489 service-com-amazonaws-sagemaker-sagemaker
+211679 service-com-amazonaws-glue-awsglue
+203049 service-com-amazonaws-iotsitewise-awsiotsitewise
+200698 service-com-amazonaws-lambda-awsgirapiservice
+187934 service-com-amazonaws-rds-amazonrdsv19
+-- open issue files mentioning IAM gaps we hit
+permissions boundary: 10
+session policy: 37
+ListBuckets: 13
+terraform: 75
+s3control: 31
+-- emulator caps found in source (messages)
+     30 this emulator holds no
+     28 this emulator holds at once.
+     13 this emulator holds it.
+     10 this emulator keeps per bucket
+     10 this emulator keeps at once.
+      8 this emulator holds at most {} files per repository tree
+      7 this emulator keeps is bounded, so a caller cannot grow it without
+      7 this emulator keeps for the account.
+      7 this emulator holds \
+      6 this emulator keeps resident.
+      6 this emulator holds no record of.
+      6 this emulator holds no record
+      5 this emulator holds nothing
+      5 this emulator holds for the account.
+      4 this emulator keeps for one function.
+      4 this emulator holds the telemetry-config feature of at most {} \
+      4 this emulator holds tables for at most {} \
+      4 this emulator holds none of
+      4 this emulator holds no value for
+      4 this emulator holds no record of
+
+== aws-emulator-evaluation-suite @ 4df2823b
+commits: 2
+      1 amazon-ospo-app[bot]
+      1 Lennart Schneider
+fidelity_tests_manifest_rows: 29676
+check_files: 29676
+services_with_tests: 1206
+cross_service_dirs: 859
+-- tests per service (top 10)
+1063 ec2
+886 dynamodb
+641 cloudwatch
+589 lambda
+582 cognito-idp
+578 apigateway
+520 stepfunctions
+481 s3
+446 logs
+446 iam
+-- tests for services in our scenario set
+s3 481
+sqs 306
+dynamodb 886
+lambda 589
+events 200
+sns 245
+kms 238
+secretsmanager 194
+stepfunctions 520
+iam 446
+sts 145

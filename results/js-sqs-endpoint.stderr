@@ -1,0 +1,4 @@
+QueueUrl=https://sqs.us-east-1.amazonaws.com/000000000000/js-endpoint-test differs from SQSClient resolved endpoint=https://127.0.0.1:9297/, using QueueUrl host as endpoint.
+Set [endpoint=string] or [useQueueUrlAsEndpoint=false] on the SQSClient.
+QueueUrl=https://sqs.us-east-1.amazonaws.com/000000000000/js-endpoint-test differs from SQSClient resolved endpoint=https://127.0.0.1:9297/, using QueueUrl host as endpoint.
+Set [endpoint=string] or [useQueueUrlAsEndpoint=false] on the SQSClient.

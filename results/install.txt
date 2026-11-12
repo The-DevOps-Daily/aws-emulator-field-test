@@ -1,0 +1,21 @@
+download_seconds: 1.731709205
+deb_bytes: 170938884
+key_fingerprint: 98BC F336 A3BE 53B7 34E9 67C5 2E5B F49B D940 F624
+signature: Good signature from "SSM Publishing <ssm-publishing@amazon.com>" [unknown]
+apt_install_seconds: 17.513728601
+version: Version: 1.0.322
+installed_bytes_opt: 972116295
+file_count_opt: 2
+--- largest files
+970692256 /opt/aws-emulator/bin/aws-emulator
+1424039 /opt/aws-emulator/THIRD_PARTY_LICENSES
+--- binary
+/usr/bin/aws-emulator: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.0.0, BuildID[sha1]=cf9e91776baae8c88c86d9117382852912f4b71f, stripped
+lrwxrwxrwx 1 root root 34 Nov 12 08:57 /usr/bin/aws-emulator -> /opt/aws-emulator/bin/aws-emulator
+--- ldd
+	linux-vdso.so.1 (0x00007ffcfbdaa000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x000075aec0517000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x000075aefa485000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x000075aec0200000)
+	libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x000075aefa480000)
+	/lib64/ld-linux-x86-64.so.2 (0x000075aefa492000)

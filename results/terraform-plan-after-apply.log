@@ -1,0 +1,62 @@
+data.archive_file.fn: Reading...
+data.archive_file.fn: Read complete after 0s [id=887c7b4f97bac0529a0efcb15f4168915d8d52da]
+aws_iam_role.sfn: Refreshing state... [id=tf-fieldtest-sfn]
+aws_kms_key.app: Refreshing state... [id=16cbe7e6-1f0f-4255-97f8-75c85d23a6bf]
+aws_sns_topic.events: Refreshing state... [id=arn:aws:sns:us-east-1:000000000000:tf-fieldtest-events]
+aws_cloudwatch_log_group.fn: Refreshing state... [id=/aws/lambda/tf-fieldtest-worker]
+aws_iam_role.fn: Refreshing state... [id=tf-fieldtest-fn]
+aws_ssm_parameter.feature_flag: Refreshing state... [id=/tf-fieldtest/feature-flag]
+aws_cloudwatch_event_rule.orders: Refreshing state... [id=tf-fieldtest-orders]
+aws_sqs_queue.dlq: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/tf-fieldtest-dlq]
+aws_dynamodb_table.orders: Refreshing state... [id=tf-fieldtest-orders]
+aws_s3_bucket.assets: Refreshing state... [id=tf-fieldtest-assets]
+aws_kms_alias.app: Refreshing state... [id=alias/tf-fieldtest]
+aws_secretsmanager_secret.db: Refreshing state... [id=arn:aws:secretsmanager:us-east-1:000000000000:secret:tf-fieldtest/db-gBKRuu]
+aws_lambda_function.worker: Refreshing state... [id=tf-fieldtest-worker]
+aws_sqs_queue.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/tf-fieldtest-jobs]
+aws_secretsmanager_secret_version.db: Refreshing state... [id=arn:aws:secretsmanager:us-east-1:000000000000:secret:tf-fieldtest/db-gBKRuu|terraform-LIsZk2gr1Sk913rkhQbXtsEJrC]
+aws_sqs_queue_policy.jobs: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/000000000000/tf-fieldtest-jobs]
+aws_iam_role_policy.fn: Refreshing state... [id=tf-fieldtest-fn:queue-and-table]
+aws_sns_topic_subscription.jobs: Refreshing state... [id=arn:aws:sns:us-east-1:000000000000:tf-fieldtest-events:10c3d061-6c75-4df2-8e04-07d67692fbd4]
+aws_cloudwatch_event_target.orders: Refreshing state... [id=tf-fieldtest-orders-terraform-V0XWcaBvK61MiKpK6fSKNIwxJL]
+aws_sfn_state_machine.flow: Refreshing state... [id=arn:aws:states:us-east-1:000000000000:stateMachine:tf-fieldtest-flow]
+aws_iam_role_policy.sfn: Refreshing state... [id=tf-fieldtest-sfn:invoke-worker]
+aws_lambda_event_source_mapping.jobs: Refreshing state... [id=97e97364-814b-474b-8bf7-9e5df1516d38]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform planned the following actions, but then encountered a problem:
+
+  # aws_dynamodb_table.orders will be updated in-place
+  ~ resource "aws_dynamodb_table" "orders" {
+        id                          = "tf-fieldtest-orders"
+        name                        = "tf-fieldtest-orders"
+        tags                        = {}
+        # (14 unchanged attributes hidden)
+
+      - on_demand_throughput {
+          - max_read_request_units  = -1 -> null
+          - max_write_request_units = -1 -> null
+        }
+
+        # (6 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Warning: Argument is deprecated
+
+  with aws_dynamodb_table.orders,
+  on main.tf line 49, in resource "aws_dynamodb_table" "orders":
+  49: resource "aws_dynamodb_table" "orders" {
+
+hash_key is deprecated. Use key_schema instead.
+
+Error: listing tags for S3 (Simple Storage) Bucket (tf-fieldtest-assets): operation error S3 Control: ListTagsForResource, https response error StatusCode: 0, RequestID: , HostID: , request send failed, Get "https://000000000000.127.0.0.1:9297/v20180820/tags/arn%3Aaws%3As3%3A%3A%3Atf-fieldtest-assets": dial tcp: lookup 000000000000.127.0.0.1: no such host
+
+  with aws_s3_bucket.assets,
+  on main.tf line 18, in resource "aws_s3_bucket" "assets":
+  18: resource "aws_s3_bucket" "assets" { bucket = "${local.name}-assets" }
+

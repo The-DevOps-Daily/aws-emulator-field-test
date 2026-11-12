@@ -1,0 +1,293 @@
+{
+  "target": "floci",
+  "run": "a1e64978",
+  "cases": 32,
+  "matches_aws": 6,
+  "gaps": [
+    "s3:ListAllMyBuckets",
+    "s3:PutObject",
+    "sqs:SendMessage",
+    "dynamodb:PutItem",
+    "kms:Encrypt",
+    "secretsmanager:GetSecretValue",
+    "sns:Publish",
+    "events:PutEvents",
+    "iam:CreateUser",
+    "Allow * plus explicit Deny s3:PutObject",
+    "Allow * but permissions boundary allows only reads: s3:PutObject",
+    "Allow PutObject only with SSE-KMS: put without SSE",
+    "bucket policy denies this admin user: s3:PutObject",
+    "bucket policy denies everyone over HTTPS: emulator's own key PutObject",
+    "KMS key policy denies this admin user: kms:Encrypt",
+    "secret resource policy denies this admin user: GetSecretValue",
+    "PutObject allowed on bucket A only: put to bucket B",
+    "Allow NotAction s3:*: s3:PutObject",
+    "s3:ListBucket (ListObjectsV2)",
+    "s3:GetObject",
+    "admin user assumes a role that trusts only lambda.amazonaws.com",
+    "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+    "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+    "admin role assumed with a GetObject-only session policy: s3:PutObject",
+    "EventBridge rule -> SQS queue with no queue policy",
+    "SNS topic -> SQS queue with no queue policy"
+  ],
+  "results": [
+    {
+      "group": "user with no policies",
+      "case": "sts:GetCallerIdentity",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:ListAllMyBuckets",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "sqs:SendMessage",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "dynamodb:PutItem",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "kms:Encrypt",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "secretsmanager:GetSecretValue",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "sns:Publish",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "events:PutEvents",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "iam:CreateUser",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "admin user: s3:PutObject (baseline)",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow * plus explicit Deny s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow * but permissions boundary allows only reads: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow PutObject only with SSE-KMS: put without SSE",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow PutObject only with SSE-KMS: put with SSE-KMS",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "resource policies",
+      "case": "bucket policy denies this admin user: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "resource policies",
+      "case": "bucket policy denies everyone over HTTPS: emulator's own key PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "resource policies",
+      "case": "KMS key policy denies this admin user: kms:Encrypt",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "resource policies",
+      "case": "secret resource policy denies this admin user: GetSecretValue",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "resource policies",
+      "case": "no identity policy, bucket policy allows this user: s3:PutObject",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "PutObject allowed on bucket A only: put to bucket A",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "PutObject allowed on bucket A only: put to bucket B",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow NotAction s3:*: sqs:SendMessage",
+      "aws_expected": "allow",
+      "emulator": "allow",
+      "matches_aws": true,
+      "detail": ""
+    },
+    {
+      "group": "identity policies",
+      "case": "Allow NotAction s3:*: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:ListBucket (ListObjectsV2)",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "user with no policies",
+      "case": "s3:GetObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "roles and sessions",
+      "case": "admin user assumes a role that trusts only lambda.amazonaws.com",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "roles and sessions",
+      "case": "no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself)",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "roles and sessions",
+      "case": "no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "roles and sessions",
+      "case": "admin role assumed with a GetObject-only session policy: s3:PutObject",
+      "aws_expected": "deny",
+      "emulator": "allow",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "service-to-service",
+      "case": "EventBridge rule -> SQS queue with no queue policy",
+      "aws_expected": "not delivered",
+      "emulator": "delivered",
+      "matches_aws": false,
+      "detail": ""
+    },
+    {
+      "group": "service-to-service",
+      "case": "SNS topic -> SQS queue with no queue policy",
+      "aws_expected": "not delivered",
+      "emulator": "delivered",
+      "matches_aws": false,
+      "detail": ""
+    }
+  ],
+  "note": "aws_expected is taken from AWS documentation; these cases were not run on real AWS."
+}

@@ -1,0 +1,34 @@
+OK   [user with no policies] sts:GetCallerIdentity: aws=allow emulator=allow 
+GAP  [user with no policies] s3:ListAllMyBuckets: aws=deny emulator=allow 
+GAP  [user with no policies] s3:PutObject: aws=deny emulator=allow 
+GAP  [user with no policies] sqs:SendMessage: aws=deny emulator=allow 
+GAP  [user with no policies] dynamodb:PutItem: aws=deny emulator=allow 
+GAP  [user with no policies] kms:Encrypt: aws=deny emulator=allow 
+GAP  [user with no policies] secretsmanager:GetSecretValue: aws=deny emulator=allow 
+GAP  [user with no policies] sns:Publish: aws=deny emulator=allow 
+GAP  [user with no policies] events:PutEvents: aws=deny emulator=allow 
+GAP  [user with no policies] iam:CreateUser: aws=deny emulator=allow 
+OK   [identity policies] admin user: s3:PutObject (baseline): aws=allow emulator=allow 
+GAP  [identity policies] Allow * plus explicit Deny s3:PutObject: aws=deny emulator=allow 
+GAP  [identity policies] Allow * but permissions boundary allows only reads: s3:PutObject: aws=deny emulator=allow 
+GAP  [identity policies] Allow PutObject only with SSE-KMS: put without SSE: aws=deny emulator=allow 
+OK   [identity policies] Allow PutObject only with SSE-KMS: put with SSE-KMS: aws=allow emulator=allow 
+GAP  [resource policies] bucket policy denies this admin user: s3:PutObject: aws=deny emulator=allow 
+GAP  [resource policies] bucket policy denies everyone over HTTPS: emulator's own key PutObject: aws=deny emulator=allow 
+GAP  [resource policies] KMS key policy denies this admin user: kms:Encrypt: aws=deny emulator=allow 
+GAP  [resource policies] secret resource policy denies this admin user: GetSecretValue: aws=deny emulator=allow 
+OK   [resource policies] no identity policy, bucket policy allows this user: s3:PutObject: aws=allow emulator=allow 
+OK   [identity policies] PutObject allowed on bucket A only: put to bucket A: aws=allow emulator=allow 
+GAP  [identity policies] PutObject allowed on bucket A only: put to bucket B: aws=deny emulator=allow 
+OK   [identity policies] Allow NotAction s3:*: sqs:SendMessage: aws=allow emulator=allow 
+GAP  [identity policies] Allow NotAction s3:*: s3:PutObject: aws=deny emulator=allow 
+GAP  [user with no policies] s3:ListBucket (ListObjectsV2): aws=deny emulator=allow 
+GAP  [user with no policies] s3:GetObject: aws=deny emulator=allow 
+GAP  [roles and sessions] admin user assumes a role that trusts only lambda.amazonaws.com: aws=deny emulator=allow 
+GAP  [roles and sessions] no-policy user assumes a role that trusts the account (needs sts:AssumeRole itself): aws=deny emulator=allow 
+GAP  [roles and sessions] no-policy user: assume the account-trusted admin role, then s3:PutObject + iam:CreateUser: aws=deny emulator=allow 
+GAP  [roles and sessions] admin role assumed with a GetObject-only session policy: s3:PutObject: aws=deny emulator=allow 
+GAP  [service-to-service] EventBridge rule -> SQS queue with no queue policy: aws=not delivered emulator=delivered
+GAP  [service-to-service] SNS topic -> SQS queue with no queue policy: aws=not delivered emulator=delivered
+
+6/32 cases match documented AWS behaviour -> /root/results/floci-iam-gap.json

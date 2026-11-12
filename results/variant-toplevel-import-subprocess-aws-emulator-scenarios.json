@@ -1,0 +1,343 @@
+{
+  "target": "aws-emulator",
+  "endpoint": "https://127.0.0.1:9297",
+  "run": "63e8099d",
+  "seconds": 39.4,
+  "checks_passed": 36,
+  "checks_total": 40,
+  "lambda_invoke_ms": [
+    661.8,
+    638.0,
+    699.5,
+    611.2
+  ],
+  "lambda_probe": {
+    "errorMessage": "Unable to import module 'app': No module named '_signal'",
+    "errorType": "Runtime.ImportModuleError",
+    "requestId": "",
+    "stackTrace": []
+  },
+  "results": [
+    {
+      "scenario": "S3: objects, presigned URLs, multipart, versioning",
+      "status": "pass",
+      "passed": 9,
+      "total": 9,
+      "seconds": 3.57,
+      "checks": [
+        {
+          "check": "create bucket",
+          "ok": true,
+          "detail": "fieldtest-63e8099d",
+          "ms": 28.4
+        },
+        {
+          "check": "put/get round trip",
+          "ok": true,
+          "detail": "b'hello'",
+          "ms": 31.1
+        },
+        {
+          "check": "presigned GET",
+          "ok": true,
+          "detail": "HTTP 200 b'hello'",
+          "ms": 16.6
+        },
+        {
+          "check": "expired presigned GET is refused (AWS: 403)",
+          "ok": true,
+          "detail": "HTTP 403 b'<Error><Code>AccessDenied</Code><Message>Request has expired</Message><X-Amz-Expires>1</X-Amz-Expires><Expires>2026-11-12T09:01:33Z</Expires><ServerTime>2026-11'",
+          "ms": 2512.1
+        },
+        {
+          "check": "presigned PUT",
+          "ok": true,
+          "detail": "HTTP 200, stored b'uploaded'",
+          "ms": 34.7
+        },
+        {
+          "check": "multipart upload, 3 parts",
+          "ok": true,
+          "detail": "len=11534336 etag=\"c67bb12d6b8f0cd0e47f783644e4a2fd-3\"",
+          "ms": 535.4
+        },
+        {
+          "check": "1 MiB first part is refused (AWS: EntityTooSmall)",
+          "ok": true,
+          "detail": "EntityTooSmall: Your proposed upload is smaller than the minimum allowed size",
+          "ms": 80.7
+        },
+        {
+          "check": "versioning keeps old versions",
+          "ok": true,
+          "detail": "versions=2 old=b'one'",
+          "ms": 58.8
+        },
+        {
+          "check": "delete creates a delete marker",
+          "ok": true,
+          "detail": "NoSuchKey: The specified key does not exist.; v1=b'one'",
+          "ms": 44.3
+        }
+      ]
+    },
+    {
+      "scenario": "SQS: visibility timeout, DLQ, redrive back",
+      "status": "pass",
+      "passed": 5,
+      "total": 5,
+      "seconds": 6.25,
+      "checks": [
+        {
+          "check": "queues with redrive policy",
+          "ok": true,
+          "detail": "https://sqs.us-east-1.amazonaws.com/000000000000/ft-main-63e8099d",
+          "ms": 109.9
+        },
+        {
+          "check": "message hides for the visibility timeout, then returns",
+          "ok": true,
+          "detail": "first=1 while_hidden=0 after_timeout=1 receive_count=2",
+          "ms": 2528.1
+        },
+        {
+          "check": "third receive moves it to the DLQ (maxReceiveCount=2)",
+          "ok": true,
+          "detail": "main=0 dlq=1",
+          "ms": 2524.9
+        },
+        {
+          "check": "StartMessageMoveTask redrives DLQ back to source",
+          "ok": true,
+          "detail": "task=eyJ0YXNrSWQi status=COMPLETED back_in_main=1",
+          "ms": 1036.8
+        },
+        {
+          "check": "FIFO content-based dedupe",
+          "ok": true,
+          "detail": "received=1 (two identical sends)",
+          "ms": 33.6
+        }
+      ]
+    },
+    {
+      "scenario": "DynamoDB: conditional writes, transactions, streams",
+      "status": "pass",
+      "passed": 6,
+      "total": 6,
+      "seconds": 3.2,
+      "checks": [
+        {
+          "check": "create table with stream",
+          "ok": true,
+          "detail": "arn:aws:dynamodb:us-east-1:000000000000:table/ft-orders-63e8099d/stream/2026-11-12T09:01:41.892",
+          "ms": 3025.9
+        },
+        {
+          "check": "second insert-if-absent fails",
+          "ok": true,
+          "detail": "ConditionalCheckFailedException: The conditional request failed",
+          "ms": 36.5
+        },
+        {
+          "check": "stale optimistic-lock update fails",
+          "ok": true,
+          "detail": "ConditionalCheckFailedException: The conditional request failed",
+          "ms": 13.9
+        },
+        {
+          "check": "failed transaction writes nothing, reasons per item",
+          "ok": true,
+          "detail": "TransactionCanceledException reasons=['None', 'ConditionalCheckFailed'] o-2_written=False",
+          "ms": 24.8
+        },
+        {
+          "check": "successful transaction applies both writes",
+          "ok": true,
+          "detail": "version=3",
+          "ms": 14.9
+        },
+        {
+          "check": "stream records INSERT and MODIFY events",
+          "ok": true,
+          "detail": "shards=1 events=['INSERT', 'MODIFY', 'INSERT', 'MODIFY']",
+          "ms": 50.3
+        }
+      ]
+    },
+    {
+      "scenario": "Lambda: create, invoke, error, cold vs warm",
+      "status": "partial",
+      "passed": 1,
+      "total": 4,
+      "seconds": 5.24,
+      "checks": [
+        {
+          "check": "create function (python3.12 zip)",
+          "ok": true,
+          "detail": "state=Active",
+          "ms": 577.7
+        },
+        {
+          "check": "invoke returns handler output (first call = cold)",
+          "ok": false,
+          "detail": "invoke_ms=[661.8, 638.0, 699.5, 611.2] payload={'errorMessage': \"Unable to import module 'app': No module named '_signal'\", 'errorType': 'Runtime.ImportModuleError', 'requestId': '', 'stackTrace': []}",
+          "ms": 2611.5
+        },
+        {
+          "check": "handler exception surfaces as FunctionError",
+          "ok": false,
+          "detail": "FunctionError=Unhandled body={'errorMessage': \"Unable to import module 'app': No module named '_signal'\", 'errorType': 'Runtime.ImportModuleError', 'requestId': '', 'stackTrace': []}",
+          "ms": 605.2
+        },
+        {
+          "check": "function calls S3 with boto3 (emulator-side SDK)",
+          "ok": false,
+          "detail": "FunctionError=Unhandled body={'errorMessage': \"Unable to import module 'app': No module named '_signal'\", 'errorType': 'Runtime.ImportModuleError', 'requestId': '', 'stackTrace': []} object='NoSuchKey: The specified key does not exist.'",
+          "ms": 743.6
+        }
+      ]
+    },
+    {
+      "scenario": "EventBridge rule to SQS target",
+      "status": "pass",
+      "passed": 2,
+      "total": 2,
+      "seconds": 10.26,
+      "checks": [
+        {
+          "check": "rule with numeric pattern + SQS target",
+          "ok": true,
+          "detail": "arn:aws:events:us-east-1:000000000000:rule/ft-orders-63e8099d",
+          "ms": 97.3
+        },
+        {
+          "check": "only the matching event is delivered",
+          "ok": true,
+          "detail": "delivered totals=[250]",
+          "ms": 10137.5
+        }
+      ]
+    },
+    {
+      "scenario": "SNS fan-out to two SQS queues, raw + filter policy",
+      "status": "pass",
+      "passed": 2,
+      "total": 2,
+      "seconds": 8.26,
+      "checks": [
+        {
+          "check": "topic + 2 queue subscriptions",
+          "ok": true,
+          "detail": "arn:aws:sns:us-east-1:000000000000:ft-topic-63e8099d",
+          "ms": 124.5
+        },
+        {
+          "check": "raw delivery to one queue, filter policy on the other",
+          "ok": true,
+          "detail": "raw_queue=['msg-a', 'msg-b'] filtered_queue=['msg-a']",
+          "ms": 8110.6
+        }
+      ]
+    },
+    {
+      "scenario": "KMS: encrypt, decrypt, context, data keys",
+      "status": "pass",
+      "passed": 6,
+      "total": 6,
+      "seconds": 0.22,
+      "checks": [
+        {
+          "check": "create key + alias",
+          "ok": true,
+          "detail": "94b533f0-6b80-4552-abcb-e55b9ca4185e",
+          "ms": 26.2
+        },
+        {
+          "check": "encrypt/decrypt round trip via alias",
+          "ok": true,
+          "detail": "keyid=94b533f0-6b80-4552-abcb-e55b9ca4185e",
+          "ms": 25.3
+        },
+        {
+          "check": "wrong encryption context is refused (AWS: InvalidCiphertextException)",
+          "ok": true,
+          "detail": "InvalidCiphertextException: ",
+          "ms": 11.2
+        },
+        {
+          "check": "tampered ciphertext is refused",
+          "ok": true,
+          "detail": "InvalidCiphertextException: ",
+          "ms": 5.5
+        },
+        {
+          "check": "GenerateDataKey + decrypt",
+          "ok": true,
+          "detail": "plaintext_len=32",
+          "ms": 12.6
+        },
+        {
+          "check": "disabled key refuses Encrypt (AWS: DisabledException)",
+          "ok": true,
+          "detail": "DisabledException: arn:aws:kms:us-east-1:000000000000:key/94b533f0-6b80-4552-abcb-e55b9ca4185e is disabled.",
+          "ms": 30.8
+        }
+      ]
+    },
+    {
+      "scenario": "Secrets Manager: versions, stages, deletion",
+      "status": "pass",
+      "passed": 3,
+      "total": 3,
+      "seconds": 0.17,
+      "checks": [
+        {
+          "check": "create + get",
+          "ok": true,
+          "detail": "v1",
+          "ms": 60.3
+        },
+        {
+          "check": "new version moves AWSCURRENT, keeps AWSPREVIOUS",
+          "ok": true,
+          "detail": "AWSCURRENT=v2 AWSPREVIOUS=v1",
+          "ms": 38.3
+        },
+        {
+          "check": "scheduled deletion blocks reads, restore brings it back",
+          "ok": true,
+          "detail": "InvalidRequestException: You can't perform this operation on the secret because it was marked for deletion.; after restore=v2",
+          "ms": 58.5
+        }
+      ]
+    },
+    {
+      "scenario": "Step Functions: Choice, Wait, Lambda task, Fail",
+      "status": "partial",
+      "passed": 2,
+      "total": 3,
+      "seconds": 2.22,
+      "checks": [
+        {
+          "check": "create state machine",
+          "ok": true,
+          "detail": "arn:aws:states:us-east-1:000000000000:stateMachine:ft-flow-63e8099d",
+          "ms": 72.5
+        },
+        {
+          "check": "Choice -> Wait -> Lambda task succeeds",
+          "ok": false,
+          "detail": "status=FAILED output={}",
+          "ms": 1578.4
+        },
+        {
+          "check": "Fail state ends the execution with its error",
+          "ok": true,
+          "detail": "status=FAILED error=TooSmall",
+          "ms": 538.2
+        }
+      ]
+    }
+  ]
+}

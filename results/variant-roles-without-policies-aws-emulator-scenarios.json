@@ -1,0 +1,348 @@
+{
+  "target": "variant-roles-without-policies-aws-emulator",
+  "role_policies": false,
+  "endpoint": "https://127.0.0.1:9297",
+  "run": "8820f7df",
+  "seconds": 38.1,
+  "checks_passed": 38,
+  "checks_total": 40,
+  "lambda_invoke_ms": [
+    362.8,
+    410.5,
+    430.3,
+    429.9
+  ],
+  "lambda_probe": {
+    "python": "3.14.0.alpha",
+    "platform": "linux",
+    "read /etc/hostname": "OSError: a Lambda function in this emulator cannot open a file of the host",
+    "os.getuid()": "OSError: a Lambda function in this emulator has no host filesystem or process to reach",
+    "socket.gethostname()": "OSError: a Lambda function in this emulator has no host network to reach",
+    "list /": "OSError: a Lambda function in this emulator has no host filesystem or process to reach",
+    "import subprocess": "ModuleNotFoundError: No module named '_signal'",
+    "env AWS_REGION": "'us-east-1'"
+  },
+  "results": [
+    {
+      "scenario": "S3: objects, presigned URLs, multipart, versioning",
+      "status": "pass",
+      "passed": 9,
+      "total": 9,
+      "seconds": 3.44,
+      "checks": [
+        {
+          "check": "create bucket",
+          "ok": true,
+          "detail": "fieldtest-8820f7df",
+          "ms": 59.7
+        },
+        {
+          "check": "put/get round trip",
+          "ok": true,
+          "detail": "b'hello'",
+          "ms": 24.3
+        },
+        {
+          "check": "presigned GET",
+          "ok": true,
+          "detail": "HTTP 200 b'hello'",
+          "ms": 19.0
+        },
+        {
+          "check": "expired presigned GET is refused (AWS: 403)",
+          "ok": true,
+          "detail": "HTTP 403 b'<Error><Code>AccessDenied</Code><Message>Request has expired</Message><X-Amz-Expires>1</X-Amz-Expires><Expires>2026-11-12T09:04:01Z</Expires><ServerTime>2026-11'",
+          "ms": 2516.9
+        },
+        {
+          "check": "presigned PUT",
+          "ok": true,
+          "detail": "HTTP 200, stored b'uploaded'",
+          "ms": 23.5
+        },
+        {
+          "check": "multipart upload, 3 parts",
+          "ok": true,
+          "detail": "len=11534336 etag=\"d2a4e4704c9ee49c3a0ffb45993294ce-3\"",
+          "ms": 392.7
+        },
+        {
+          "check": "1 MiB first part is refused (AWS: EntityTooSmall)",
+          "ok": true,
+          "detail": "EntityTooSmall: Your proposed upload is smaller than the minimum allowed size",
+          "ms": 98.1
+        },
+        {
+          "check": "versioning keeps old versions",
+          "ok": true,
+          "detail": "versions=2 old=b'one'",
+          "ms": 65.4
+        },
+        {
+          "check": "delete creates a delete marker",
+          "ok": true,
+          "detail": "NoSuchKey: The specified key does not exist.; v1=b'one'",
+          "ms": 36.5
+        }
+      ]
+    },
+    {
+      "scenario": "SQS: visibility timeout, DLQ, redrive back",
+      "status": "pass",
+      "passed": 5,
+      "total": 5,
+      "seconds": 6.21,
+      "checks": [
+        {
+          "check": "queues with redrive policy",
+          "ok": true,
+          "detail": "https://sqs.us-east-1.amazonaws.com/000000000000/ft-main-8820f7df",
+          "ms": 95.8
+        },
+        {
+          "check": "message hides for the visibility timeout, then returns",
+          "ok": true,
+          "detail": "first=1 while_hidden=0 after_timeout=1 receive_count=2",
+          "ms": 2521.2
+        },
+        {
+          "check": "third receive moves it to the DLQ (maxReceiveCount=2)",
+          "ok": true,
+          "detail": "main=0 dlq=1",
+          "ms": 2514.1
+        },
+        {
+          "check": "StartMessageMoveTask redrives DLQ back to source",
+          "ok": true,
+          "detail": "task=eyJ0YXNrSWQi status=COMPLETED back_in_main=1",
+          "ms": 1035.8
+        },
+        {
+          "check": "FIFO content-based dedupe",
+          "ok": true,
+          "detail": "received=1 (two identical sends)",
+          "ms": 25.2
+        }
+      ]
+    },
+    {
+      "scenario": "DynamoDB: conditional writes, transactions, streams",
+      "status": "pass",
+      "passed": 6,
+      "total": 6,
+      "seconds": 3.18,
+      "checks": [
+        {
+          "check": "create table with stream",
+          "ok": true,
+          "detail": "arn:aws:dynamodb:us-east-1:000000000000:table/ft-orders-8820f7df/stream/2026-11-12T09:04:10.157",
+          "ms": 3023.9
+        },
+        {
+          "check": "second insert-if-absent fails",
+          "ok": true,
+          "detail": "ConditionalCheckFailedException: The conditional request failed",
+          "ms": 26.3
+        },
+        {
+          "check": "stale optimistic-lock update fails",
+          "ok": true,
+          "detail": "ConditionalCheckFailedException: The conditional request failed",
+          "ms": 15.4
+        },
+        {
+          "check": "failed transaction writes nothing, reasons per item",
+          "ok": true,
+          "detail": "TransactionCanceledException reasons=['None', 'ConditionalCheckFailed'] o-2_written=False",
+          "ms": 19.5
+        },
+        {
+          "check": "successful transaction applies both writes",
+          "ok": true,
+          "detail": "version=3",
+          "ms": 18.0
+        },
+        {
+          "check": "stream records INSERT and MODIFY events",
+          "ok": true,
+          "detail": "shards=1 events=['INSERT', 'MODIFY', 'INSERT', 'MODIFY']",
+          "ms": 47.1
+        }
+      ]
+    },
+    {
+      "scenario": "Lambda: create, invoke, error, cold vs warm",
+      "status": "partial",
+      "passed": 3,
+      "total": 4,
+      "seconds": 3.99,
+      "checks": [
+        {
+          "check": "create function (python3.12 zip)",
+          "ok": true,
+          "detail": "state=Active",
+          "ms": 602.1
+        },
+        {
+          "check": "invoke returns handler output (first call = cold)",
+          "ok": true,
+          "detail": "invoke_ms=[362.8, 410.5, 430.3, 429.9] payload={'echo': 'hi-3'}",
+          "ms": 1634.1
+        },
+        {
+          "check": "handler exception surfaces as FunctionError",
+          "ok": true,
+          "detail": "FunctionError=Unhandled body={'errorMessage': 'boom', 'errorType': 'ValueError', 'requestId': 'c2f6bd7c-05af-4433-a653-d000ac77d8cc', 'stackTrace': ['  File \"/var/task/app.py\", line 24, in handler\\n    raise ValueError(\"boom\")\\n']}",
+          "ms": 411.1
+        },
+        {
+          "check": "function calls S3 with boto3 (emulator-side SDK)",
+          "ok": false,
+          "detail": "FunctionError=Unhandled body={'errorMessage': 'An error occurred (AccessDenied) when calling the PutObject operation: User: arn:aws:sts::000000000000:assumed-role/ft-fn-8820f7df/ft-fn-8820f7df is not authorized to perform: s3:PutObject on resource: \"arn:aws:s3:::ft-lambda-8820f7df/from-lambda.txt\" because no identity-based policy allows the s3:PutObject action', 'errorType': 'AccessDenied', 'requestId': 'b6130a68-1f24-4586-9de5-a68e07a53798', 'stackTrace': ['  File \"/var/task/app.py\", line 29, i",
+          "ms": 693.9
+        }
+      ]
+    },
+    {
+      "scenario": "EventBridge rule to SQS target",
+      "status": "pass",
+      "passed": 2,
+      "total": 2,
+      "seconds": 10.28,
+      "checks": [
+        {
+          "check": "rule with numeric pattern + SQS target",
+          "ok": true,
+          "detail": "arn:aws:events:us-east-1:000000000000:rule/ft-orders-8820f7df",
+          "ms": 140.3
+        },
+        {
+          "check": "only the matching event is delivered",
+          "ok": true,
+          "detail": "delivered totals=[250]",
+          "ms": 10108.3
+        }
+      ]
+    },
+    {
+      "scenario": "SNS fan-out to two SQS queues, raw + filter policy",
+      "status": "pass",
+      "passed": 2,
+      "total": 2,
+      "seconds": 8.34,
+      "checks": [
+        {
+          "check": "topic + 2 queue subscriptions",
+          "ok": true,
+          "detail": "arn:aws:sns:us-east-1:000000000000:ft-topic-8820f7df",
+          "ms": 156.4
+        },
+        {
+          "check": "raw delivery to one queue, filter policy on the other",
+          "ok": true,
+          "detail": "raw_queue=['msg-a', 'msg-b'] filtered_queue=['msg-a']",
+          "ms": 8152.7
+        }
+      ]
+    },
+    {
+      "scenario": "KMS: encrypt, decrypt, context, data keys",
+      "status": "pass",
+      "passed": 6,
+      "total": 6,
+      "seconds": 0.25,
+      "checks": [
+        {
+          "check": "create key + alias",
+          "ok": true,
+          "detail": "29f4d571-3ab1-4423-82db-1bddba31ec1a",
+          "ms": 68.1
+        },
+        {
+          "check": "encrypt/decrypt round trip via alias",
+          "ok": true,
+          "detail": "keyid=29f4d571-3ab1-4423-82db-1bddba31ec1a",
+          "ms": 18.4
+        },
+        {
+          "check": "wrong encryption context is refused (AWS: InvalidCiphertextException)",
+          "ok": true,
+          "detail": "InvalidCiphertextException: ",
+          "ms": 10.0
+        },
+        {
+          "check": "tampered ciphertext is refused",
+          "ok": true,
+          "detail": "InvalidCiphertextException: ",
+          "ms": 8.4
+        },
+        {
+          "check": "GenerateDataKey + decrypt",
+          "ok": true,
+          "detail": "plaintext_len=32",
+          "ms": 12.4
+        },
+        {
+          "check": "disabled key refuses Encrypt (AWS: DisabledException)",
+          "ok": true,
+          "detail": "DisabledException: arn:aws:kms:us-east-1:000000000000:key/29f4d571-3ab1-4423-82db-1bddba31ec1a is disabled.",
+          "ms": 22.7
+        }
+      ]
+    },
+    {
+      "scenario": "Secrets Manager: versions, stages, deletion",
+      "status": "pass",
+      "passed": 3,
+      "total": 3,
+      "seconds": 0.15,
+      "checks": [
+        {
+          "check": "create + get",
+          "ok": true,
+          "detail": "v1",
+          "ms": 65.4
+        },
+        {
+          "check": "new version moves AWSCURRENT, keeps AWSPREVIOUS",
+          "ok": true,
+          "detail": "AWSCURRENT=v2 AWSPREVIOUS=v1",
+          "ms": 33.8
+        },
+        {
+          "check": "scheduled deletion blocks reads, restore brings it back",
+          "ok": true,
+          "detail": "InvalidRequestException: You can't perform this operation on the secret because it was marked for deletion.; after restore=v2",
+          "ms": 37.3
+        }
+      ]
+    },
+    {
+      "scenario": "Step Functions: Choice, Wait, Lambda task, Fail",
+      "status": "partial",
+      "passed": 2,
+      "total": 3,
+      "seconds": 2.23,
+      "checks": [
+        {
+          "check": "create state machine",
+          "ok": true,
+          "detail": "arn:aws:states:us-east-1:000000000000:stateMachine:ft-flow-8820f7df",
+          "ms": 118.2
+        },
+        {
+          "check": "Choice -> Wait -> Lambda task succeeds",
+          "ok": false,
+          "detail": "status=FAILED output={} error=Lambda.AWSLambdaException cause=User: arn:aws:iam::000000000000:role/ft-sfn-8820f7df is not authorized to perform: lambda:InvokeFunction on resource: arn:aws:lambda:us-east-1:000000000000:function:ft-fn-8820f7df because no identity-based policy allows the lambda:InvokeFunction action (Service: AWSLambda; Status Code: 400; Error Co",
+          "ms": 1558.4
+        },
+        {
+          "check": "Fail state ends the execution with its error",
+          "ok": true,
+          "detail": "status=FAILED error=TooSmall",
+          "ms": 531.1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "node": "v22.23.5",
+  "hostsBlock": "off",
+  "out": [
+    {
+      "label": "default client",
+      "ok": false,
+      "error": "InvalidClientTokenId: The security token included in the request is invalid.",
+      "cause": null
+    },
+    {
+      "label": "useQueueUrlAsEndpoint: false",
+      "ok": true,
+      "queueUrl": "https://sqs.us-east-1.amazonaws.com/000000000000/js-endpoint-test",
+      "body": "hello"
+    }
+  ]
+}
