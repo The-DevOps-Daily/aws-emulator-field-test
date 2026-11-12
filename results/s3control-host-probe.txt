@@ -1,0 +1,10 @@
+$ echo '127.0.0.1 000000000000.127.0.0.1' >> /etc/hosts
+$ getent hosts 000000000000.127.0.0.1
+[exit 2]
+$ curl -sk https://000000000000.127.0.0.1:9297/__admin/health
+[exit 35]
+$ curl -sk --resolve 000000000000.127.0.0.1:9297:127.0.0.1 https://000000000000.127.0.0.1:9297/__admin/health
+000 [exit 35]
+--- certificate subjectAltName
+X509v3 Subject Alternative Name: 
+    DNS:localhost, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1

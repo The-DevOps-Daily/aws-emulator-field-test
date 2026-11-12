@@ -1,0 +1,10 @@
+{
+  "s3": {
+    "stored_objects": 654,
+    "error": "ValidationException: storing \"obj-00654\" would leave the bucket \"cap-probe\" holding 67131605 bytes of objects, past the 67108864 bytes this emulator keeps per bucket"
+  },
+  "sqs": {
+    "stored_messages": 1000,
+    "error": "OverLimit: This emulator holds at most 1000 messages per queue; queue cap-probe cannot take 1 more. Delete messages from it first."
+  }
+}

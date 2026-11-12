@@ -49,6 +49,7 @@ numbers = {
                   "per_scenario": [(r["scenario"], r["status"], r["passed"], r["total"]) for r in scen["results"]],
                   "lambda_invoke_ms": scen["lambda_invoke_ms"], "lambda_probe": scen["lambda_probe"]},
     "iam": {"matches": iam["matches_aws"], "cases": iam["cases"], "gaps": iam["gaps"]},
+    "caps_probe": json.loads((R / "caps-probe.json").read_text()),
     "release_scores": {k: scores[k] for k in ("units", "by_outcome", "pass_rate", "services_scored")},
     "release_scores_our_services": {k.split("#")[0].replace("com.amazonaws.", ""): v["pass_rate"]
                                     for k, v in scores["our_services"].items()},

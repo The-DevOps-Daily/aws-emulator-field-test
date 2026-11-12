@@ -195,6 +195,16 @@
       "admin role assumed with a GetObject-only session policy: s3:PutObject"
     ]
   },
+  "caps_probe": {
+    "s3": {
+      "stored_objects": 654,
+      "error": "ValidationException: storing \"obj-00654\" would leave the bucket \"cap-probe\" holding 67131605 bytes of objects, past the 67108864 bytes this emulator keeps per bucket"
+    },
+    "sqs": {
+      "stored_messages": 1000,
+      "error": "OverLimit: This emulator holds at most 1000 messages per queue; queue cap-probe cannot take 1 more. Delete messages from it first."
+    }
+  },
   "release_scores": {
     "units": 42937,
     "by_outcome": {
@@ -399,5 +409,5 @@
       "SNS topic -> SQS queue with no queue policy"
     ]
   },
-  "results_sha256": "9c043bb7bd1066f0c425b6e159e18dde9c067052955daf424f802093f2aa3070"
+  "results_sha256": "99c8fc4f113fb8b289bdd615b1c4552636bc2f370e212cc6bd90aa6d68be4b26"
 }

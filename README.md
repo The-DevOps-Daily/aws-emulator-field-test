@@ -40,7 +40,9 @@ bash /root/scripts/start-aws-emulator.sh && bash /root/scripts/run-terraform-v5.
 bash /root/scripts/start-aws-emulator.sh && bash /root/scripts/cli-and-js.sh
 node /root/js/js-sqs-endpoint.mjs                   # after cli-and-js.sh installed the SDK
 
-bash /root/scripts/compare.sh                       # Moto server + Floci, same suites, default configs
+bash /root/scripts/probes.sh                        # per-bucket and per-queue caps; S3 Control host name
+bash /root/scripts/compare.sh                       # Moto server + Floci, same scenario suite, default configs
+bash /root/scripts/iam-all.sh                       # the IAM matrix on all three, each freshly started
 
 git clone https://github.com/aws/aws-emulator.git /root/src/aws-emulator
 git clone https://github.com/aws/aws-emulator-evaluation-suite.git /root/src/aws-emulator-evaluation-suite
@@ -68,7 +70,9 @@ Each emulator start is fresh, so every suite runs against empty state.
 | `loaded_memory.py` | RSS while filling S3, DynamoDB and SQS, and after deleting it all. Also probes the per-bucket and per-queue caps. |
 | `run-terraform.sh`, `run-terraform-v5.sh` | init, apply, a second plan (drift check) and destroy for `terraform/main.tf`. |
 | `cli-and-js.sh`, `js-smoke.mjs`, `js-sqs-endpoint.mjs` | AWS CLI session, JS SDK v3 smoke test, and the SQS queue-URL endpoint check (with and without a hosts-file block). |
-| `compare.sh` | Moto 5.2.5 server and Floci 2.4.0, default configs, same two suites. |
+| `probes.sh` | Fills one bucket and one queue until the emulator refuses; checks whether `000000000000.127.0.0.1` (the S3 Control host) can reach it. |
+| `compare.sh`, `iam-all.sh` | Moto 5.2.5 server and Floci 2.4.0, default configs, same two suites. `iam-all.sh` reruns the matrix on all three with one script version. |
+| `iam_table.py` | Prints the permission results of all three as one Markdown table. |
 | `repo_stats.sh`, `scores_summary.py` | Commit authors, tree size, issue files, fidelity test counts; the release's own fidelity scores. |
 | `post_numbers.py` | Derives the numbers the post quotes, stamped with a hash of `results/`. |
 
